@@ -21,9 +21,10 @@ body{
 }
 
 .register{
-  max-width: 978px;
-  width: 100vw;
+  max-width: 778px;
+  width: 50vw;
   display:flex;
+  margin: 0 auto;
   border: 1px solid #e9ecef;
   border-radius: 5px;
   /* box-shadow: 1px 3px 10px #e9ecef; */
@@ -35,9 +36,9 @@ body{
 }
 
 #form{
-  max-width: 320px;
-  width: 100vw;
-  margin: 2em auto;
+  max-width: 220px;
+  width: 30vw;
+  margin: 0,5em auto;
 }
 
 #form >  input, .btn{
@@ -72,11 +73,11 @@ body{
 
 .register .col-1{
   margin: auto;
-  padding: 3em 0;
+  padding: 0,5em 0;
 }
 
 .register .col-2 img{
-  width: 480px;
+  width: 350px;
   height: 100%;
   object-fit: cover;
   align-self: flex-end;
@@ -84,8 +85,12 @@ body{
   border-bottom-right-radius: 5px;
   display: none;
 }
+.section{
+  
 
-@media screen and (min-width: 860px)  {
+}
+
+@media screen and (min-width: 660px)  {
   .register .col-2 img{
     display: initial;
   }

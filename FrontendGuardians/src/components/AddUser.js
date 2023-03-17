@@ -41,12 +41,12 @@ const saveUser = (e)=>{
 //   console.log(data);
 // };
   return (
-    <section>
+    <section className="section">
     <div className="register">
         <div className="col-1">
             <h1> Add New User</h1>
             <form id='form' className='flex flex-col' onSubmit={handleSubmit(saveUser)}>
-           
+      
 {/* <label className='block text-black text-sm font-normal'>First name</label> */}
 <input type="text"
 {...register("firstName", { required : true })} 
