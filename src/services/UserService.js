@@ -14,17 +14,17 @@ class UserService {
   getUsers(){
     return axios.get( User_api_base_url)
   }
-  // deleteUser(id) {
-  //   return axios.delete(User_api_base_url + "/" + id);
-  // }
+  deleteUser(id) {
+    return axios.delete(User_api_base_url + "/" + id);
+  }
 
-  // getUserById(id) {
-  //   return axios.get(User_api_base_url + "/" + id);
-  // }
+  getUserById(id) {
+    return axios.get(User_api_base_url + "/" + id);
+  }
 
-  // updateUser(user, id) {
-  //   return axios.put(User_api_base_url + "/" + id, user);
-  // }
+  updateUser(user, id) {
+    return axios.put(User_api_base_url + "/" + id, user);
+  }
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export

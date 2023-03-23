@@ -1,6 +1,29 @@
 .App {
   text-align: center;
 
+
+}
+/* #root {
+  background: rgb(255, 255, 255);
+  background: repeating-linear-gradient(to bottom , rgb(255, 255, 255) 0%, rgb(4, 4, 4) 100%);
+} */
+
+.bg{
+  background: rgb(255, 255, 255);
+  background: repeating-linear-gradient(to top , rgb(255, 255, 255) 0%, rgb(4, 4, 4) 100%);
+  
+}
+
+tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+tr:nth-child(even) {
+  background-color: #e6e6e6;
+}
+th{
+  --tw-bg-opacity: 1;
+    background-color: rgb(115 115 115 / var(--tw-bg-opacity));
 }
 .form{
 
@@ -10,9 +33,10 @@
   display: flex;
   justify-content: center;
   margin: 0 auto;
-  background-color: cadetblue;
+  background-color: rgb(11, 11, 7);
   max-height: 550px;
-  
+  background: rgb(255, 255, 255);
+  background: repeating-linear-gradient(to top , rgb(255, 255, 255) 0%, rgb(4, 4, 4) 100%);
 }
 .App-logo {
   height: 40vmin;
@@ -26,7 +50,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #080808;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -40,6 +64,8 @@
   display: flex;
   justify-content: center;
   margin-top: 10px;
+  background: rgb(255, 255, 255);
+  background: repeating-linear-gradient(to top , rgb(255, 255, 255) 0%, rgb(4, 4, 4) 100%);
 }
 
 

@@ -26,7 +26,7 @@ const UserList = () => {
 
     const deleteUser= (e, id) => {
         e.preventDefault();
-        UserService.deleteEmployee(id).then((res) => {
+        UserService.deleteUser(id).then((res) => {
           if (users) {
             setUsers((prevElement) => {
               return prevElement.filter((user) => user.id !== id);
@@ -39,12 +39,12 @@ const UserList = () => {
   return (
     <div className="container mx-auto my-4">
      <div className="h-12 px-2">
-        <button onClick={() => navigate("/addUser")} className='rounder bg-slate-600 text-white  px-6 py-2'  >Add user</button>
+        <button onClick={() => navigate("/addUser")} className='rounder  text-black bg-neutral-500  px-6 py-2'  >Add user</button>
     </div>
     <div className='flex shadow 'style={{ height: "400px", overflowY: "scroll" }}>
         <table className='min-w-40%' >
-            <thead className='bg-gray-50'>
-                <tr>
+            <thead className=' th '>
+                <tr >
                     <th className='text-left font-medium  uppercase  py-3 px-2'>first name </th>
                     <th className='text-left font-medium uppercase  py-3 px-2'>last name </th>
                     <th className='text-left font-medium uppercase  py-3 px-2'>username </th>
@@ -57,7 +57,7 @@ const UserList = () => {
                 </tr>
             </thead>
             {!loading && (
-            <tbody className="bg-white">
+            <tbody className="bg-gray-90">
               {users.map((user) => (
                 <User
                   user={user}

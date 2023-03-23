@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import UserService from '../services/UserService'
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -18,6 +19,8 @@ const AddUser = () => {
     birthdate:"",
     role:"User"
   })
+const navigate = useNavigate();
+
 
   const handleChange = (e) =>{
     const value = e.target.value;
@@ -30,6 +33,7 @@ const saveUser = (e)=>{
   UserService.saveUser(user).then((response)=>
   {
     console.log(response);
+    navigate("../components/Login.js");
 
   }).catch((error)=>
   {
@@ -48,14 +52,14 @@ const reset = (e) => {
     password:"",
     phone:"",
     birthdate:"",
-    role:"User"
+    role:""
   });
 };
   return (
     
     <div className="form  shadow border-b">
     <div className="px-10 py-10 ">
-      <div className="font-bold text-4xl ">
+      <div className="font-bold text-4xl text-white ">
             <h1> Sign up</h1>
            </div> 
       <form onSubmit={handleSubmit(saveUser)}>
@@ -69,7 +73,7 @@ name='firstName'
 value={user.firstName}
 onChange={(e)=> handleChange(e)}/>
   {/* {errors.firstName?.type === "required" && "username is required" } */}
-  {errors.firstName && <span className="text-red-500">First name is required</span>}
+  {errors.firstName && <span className="text-red-500"> First name is required</span>}
 </div>
 
 {/* <label className='block text-black text-sm font-normal'>Last name</label> */}
@@ -80,7 +84,7 @@ placeholder=' last name'
 name='lastName'
 value={user.lastName}
 onChange={(e)=> handleChange(e)}></input>
- {errors.lastName && <span className="text-red-500">last  name is required</span>}
+ {errors.lastName && <span className="text-red-500"> last  name is required</span>}
 </div>
 
 {/* <label className='block text-black text-sm font-normal'>User name</label> */}
@@ -92,7 +96,7 @@ placeholder=' username'
 name='userName'
 value={user.userName}
 onChange={(e)=> handleChange(e)}></input>
- {errors.userName && <span className="text-red-500">username is required</span>}
+ {errors.userName && <span className="text-red-500"> username is required</span>}
 
 </div>
 {/* <label className='block text-black text-sm font-normal'>Email</label> */}
@@ -104,7 +108,7 @@ placeholder=' email'
 name='email'
 value={user.email}
 onChange={(e)=> handleChange(e)}></input>
- {errors.email && <span className="text-red-500">email is required</span>}
+ {errors.email && <span className="text-red-500"> email is required</span>}
 </div>
 
 {/* <label className='block text-black text-sm font-normal'>Address</label> */}
@@ -116,7 +120,7 @@ placeholder=' address'
 name='address'
 value={user.address}
 onChange={(e)=> handleChange(e)}></input>
- {errors.address && <span className="text-red-500">address is required</span>}
+ {errors.address && <span className="text-red-500"> address is required</span>}
 </div>
 
 {/* <label className='block text-black text-sm font-normal'>Password</label> */}
@@ -128,7 +132,7 @@ placeholder=' password'
 name='password'
 value={user.password}
 onChange={(e)=> handleChange(e)}></input>
- {errors.password && <span className="text-red-500">minimum password length  is 4 character</span>}
+ {errors.password && <span className="text-red-500"> min length is 4 </span>}
 
 </div>
 {/* <label className='block text-black text-sm font-normal'>Phone</label> */}
@@ -140,7 +144,7 @@ placeholder=' phone number'
 name='phone'
 value={user.phone}
 onChange={(e)=> handleChange(e)}></input>
- {errors.phone && <span className="text-red-500"> phone number is exactly 10 digits</span>}
+ {errors.phone && <span className="text-red-500"> max number is 9</span>}
 </div>
 
 
@@ -155,13 +159,14 @@ onChange={(e)=> handleChange(e)}></input>
 name='birthdate'
 value={user.birthdate}
 onChange={(e)=> handleChange(e)}></input>
- {errors.birthdate && <span className="text-red-500">date should be in the past</span>}
+ {errors.birthdate && <span className="text-red-500"> date should be in the past</span>}
 
 </div>
   
 <div className="items-center justify-center h-14 w-full my-4 space-x-4 pt-4">
 <button type='submit' className="rounded text-white font-semibold bg-green-700 hover:bg-gray-700 py-2 px-6">Save</button>
-<button className="rounded text-white font-semibold bg-red-700 hover:bg-gray-700 py-2 px-6" onClick={reset}>Delete</button>
+<button className="rounded text-white font-semibold bg-red-700 hover:bg-gray-700 py-2 px-6"
+ onClick={reset}>Delete</button>
 </div>
 </form>
 </div>
