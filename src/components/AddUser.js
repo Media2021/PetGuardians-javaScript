@@ -59,7 +59,7 @@ const reset = (e) => {
     
     <div className="form  shadow border-b">
     <div className="px-10 py-10 ">
-      <div className="font-bold text-4xl text-white ">
+      <div className="font-bold text-2xl text-white bg-black text-center">
             <h1> Sign up</h1>
            </div> 
       <form onSubmit={handleSubmit(saveUser)}>

@@ -48,13 +48,13 @@ const UpdateUser = () => {
   };
 
   return (
-    <div className="form  max-w-2xl mx-auto shadow border-b">
+    <div className="form  max-w-2xl mx-auto shadow border-b ">
       <div className="px-8 py-8">
-        <div className="font-thin text-2xl tracking-wider">
-          <h1>Update User</h1>
+        <div className="font-bold text-2xl bg-black text-white text-center ">
+          <h1> Update profile</h1>
         </div>
         <div className="items-center justify-center h-14 w-full my-4">
-          <label className="block text-white text-sm font-normal">
+          <label className="block text-black text-sm font-normal">
             First Name
           </label>
           <input
@@ -66,7 +66,7 @@ const UpdateUser = () => {
             className="h-10 w-96 border mt-2 px-2 py-2"></input>
         </div>
         <div className="items-center justify-center h-14 w-full my-4">
-          <label className="block text-white  text-sm font-normal">
+          <label className="block text-black  text-sm font-normal">
             Last Name
           </label>
           <input
@@ -78,7 +78,7 @@ const UpdateUser = () => {
             className="h-10 w-96 border mt-2 px-2 py-2"></input>
         </div>
         <div className="items-center justify-center h-14 w-full my-4">
-          <label className="block text-white  text-sm font-normal">
+          <label className="block text-black  text-sm font-normal">
             Username
           </label>
           <input
@@ -90,7 +90,7 @@ const UpdateUser = () => {
             className="h-10 w-96 border mt-2 px-2 py-2"></input>
         </div>
         <div className="items-center justify-center h-14 w-full my-4">
-          <label className="block text-white  text-sm font-normal">
+          <label className="block text-black  text-sm font-normal">
             Email
           </label>
           <input
@@ -102,7 +102,7 @@ const UpdateUser = () => {
             className="h-10 w-96 border mt-2 px-2 py-2"></input>
         </div>
         <div className="items-center justify-center h-14 w-full my-4">
-          <label className="block text-white  text-sm font-normal">
+          <label className="block text-black  text-sm font-normal">
             Address
           </label>
           <input
@@ -114,7 +114,7 @@ const UpdateUser = () => {
             className="h-10 w-96 border mt-2 px-2 py-2"></input>
         </div>
         <div className="items-center justify-center h-14 w-full my-4">
-          <label className="block text-white  text-sm font-normal">
+          <label className="block text-black  text-sm font-normal">
             Password
           </label>
           <input
@@ -126,7 +126,7 @@ const UpdateUser = () => {
             className="h-10 w-96 border mt-2 px-2 py-2"></input>
         </div>
         <div className="items-center justify-center h-14 w-full my-4">
-          <label className="block text-white  text-sm font-normal">
+          <label className="block text-black  text-sm font-normal">
             Phone
           </label>
           <input
@@ -138,7 +138,7 @@ const UpdateUser = () => {
             className="h-10 w-96 border mt-2 px-2 py-2"></input>
         </div>
         <div className="items-center justify-center h-14 w-full my-4">
-          <label className="block text-white  text-sm font-normal">
+          <label className="block text-black  text-sm font-normal">
             Birthdate
           </label>
           <input

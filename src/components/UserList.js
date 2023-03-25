@@ -39,11 +39,11 @@ const UserList = () => {
   return (
     <div className="container mx-auto my-4">
      <div className="h-12 px-2">
-        <button onClick={() => navigate("/addUser")} className='rounder  text-black bg-neutral-500  px-6 py-2'  >Add user</button>
+        <button onClick={() => navigate("/addUser")} className='rounder uppercase text-white bg-black font-bold px-6 py-2'  >Add user</button>
     </div>
-    <div className='flex shadow 'style={{ height: "400px", overflowY: "scroll" }}>
+    <div className='flex shadow 'style={{ height: "400px", overflowY: "scroll", boxShadow: "0px 0px 10px 5px rgba(0, 0, 0, 0.5)"  }}>
         <table className='min-w-40%' >
-            <thead className=' th '>
+            <thead className='  '>
                 <tr >
                     <th className='text-left font-medium  uppercase  py-3 px-2'>first name </th>
                     <th className='text-left font-medium uppercase  py-3 px-2'>last name </th>

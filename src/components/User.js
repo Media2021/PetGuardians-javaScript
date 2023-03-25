@@ -11,27 +11,27 @@ const User = ({ user, deleteUser }) => {
   return (
     <tr key={user.id} className="tr">
       <td className="text-left px-2 py-4 whitespace-nowrap">
-        <div className="text-sm text-gray-500">{user.firstName}</div>
+        <div className="text-sm bg-white text-black text-center">{user.firstName}</div>
       </td>
       <td className="text-left px-2 py-4 whitespace-nowrap">
-        <div className="text-sm text-gray-500">{user.lastName}</div>
+        <div className="text-sm bg-white text-black text-center">{user.lastName}</div>
       </td>
       <td className="text-left px-2 py-4 whitespace-nowrap">
-        <div className="text-sm text-gray-500">{user.userName}</div>
+        <div className="text-sm bg-white text-black text-center">{user.userName}</div>
       </td>
       <td className="text-left px-2 py-4 whitespace-nowrap">
-        <div className="text-sm text-gray-500">{user.email}</div>
+        <div className="text-sm bg-white text-black text-center">{user.email}</div>
       </td>
       <td className="text-left px-2 py-4 whitespace-nowrap">
-        <div className="text-sm text-gray-500">{user.address}</div>
+        <div className="text-sm bg-white text-black text-center">{user.address}</div>
       </td>
       <td className="text-left px-2 py-4 whitespace-nowrap">
-        <div className="text-sm text-gray-500">{user.phone}</div>
+        <div className="text-sm bg-white text-black text-center">{user.phone}</div>
       </td>
     
     
       <td className="text-left px-2 py-4 whitespace-nowrap">
-        <div className="text-sm text-gray-500">{user.birthdate}</div>
+        <div className="text-sm bg-white text-black text-center">{user.birthdate}</div>
       </td>
       <td className="text-right px-4 py-4 whitespace-nowrap font-medium text-sm">
         <button   onClick={(e, id) => editUser(e, user.id)}
