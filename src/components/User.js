@@ -17,7 +17,7 @@ const User = ({ user, deleteUser }) => {
         <div className="text-sm bg-white text-black text-center">{user.lastName}</div>
       </td>
       <td className="text-left px-2 py-4 whitespace-nowrap">
-        <div className="text-sm bg-white text-black text-center">{user.userName}</div>
+        <div className="text-sm bg-white text-black text-center">{user.username}</div>
       </td>
       <td className="text-left px-2 py-4 whitespace-nowrap">
         <div className="text-sm bg-white text-black text-center">{user.email}</div>
@@ -35,12 +35,12 @@ const User = ({ user, deleteUser }) => {
       </td>
       <td className="text-right px-4 py-4 whitespace-nowrap font-medium text-sm">
         <button   onClick={(e, id) => editUser(e, user.id)}
-          className="text-green-600 hover:text-black px-4 hover:cursor-pointer"
+          className="text-green-600  bg-white hover:text-black px-4 hover:cursor-pointer"
           >Edit</button>
         
       
         <button   onClick={(e, id) => deleteUser(e, user.id)}
-          className="text-red-600 hover:text-black px-4 hover:cursor-pointer"
+          className="text-red-600  bg-white hover:text-black px-4 hover:cursor-pointer"
           >Delete</button>
       </td>
     </tr>

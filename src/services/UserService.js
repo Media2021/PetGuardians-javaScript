@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const User_api_base_url = "http://localhost:8080/users";
+const User_api_base_url = "http://localhost:8081/users";
 
 class UserService {
   saveUser(user) {
@@ -25,7 +25,19 @@ class UserService {
   updateUser(user, id) {
     return axios.put(User_api_base_url + "/" + id, user);
   }
-}
+  login = async (username, password) => {
+    try {
+      const response = await axios.post(`${User_api_base_url}/login`, {
+        username: username,
+        password: password
+      });
+  
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw new Error('Login failed');
+    }
+  }}
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default new UserService();

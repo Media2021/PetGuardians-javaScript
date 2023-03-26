@@ -83,9 +83,9 @@ const UpdateUser = () => {
           </label>
           <input
             type="text"
-            name="userName"
+            name="username"
             placeholder=' username'
-            value={user.userName}
+            value={user.username}
             onChange={(e) => handleChange(e)}
             className="h-10 w-96 border mt-2 px-2 py-2"></input>
         </div>
@@ -113,7 +113,7 @@ const UpdateUser = () => {
             onChange={(e) => handleChange(e)}
             className="h-10 w-96 border mt-2 px-2 py-2"></input>
         </div>
-        <div className="items-center justify-center h-14 w-full my-4">
+        {/* <div className="items-center justify-center h-14 w-full my-4">
           <label className="block text-black  text-sm font-normal">
             Password
           </label>
@@ -124,7 +124,7 @@ const UpdateUser = () => {
             value={user.password}
             onChange={(e) => handleChange(e)}
             className="h-10 w-96 border mt-2 px-2 py-2"></input>
-        </div>
+        </div> */}
         <div className="items-center justify-center h-14 w-full my-4">
           <label className="block text-black  text-sm font-normal">
             Phone

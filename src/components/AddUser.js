@@ -11,7 +11,7 @@ const AddUser = () => {
     id:"",
     firstName:"",
     lastName:"",
-    userName:"",
+    username:"",
     email:"",
     address:"",
     password:"",
@@ -33,7 +33,7 @@ const saveUser = (e)=>{
   UserService.saveUser(user).then((response)=>
   {
     console.log(response);
-    navigate("../components/Login.js");
+    navigate("/Login.js");
 
   }).catch((error)=>
   {
@@ -46,7 +46,7 @@ const reset = (e) => {
     id:"",
     firstName:"",
     lastName:"",
-    userName:"",
+    username:"",
     email:"",
     address:"",
     password:"",
@@ -91,12 +91,12 @@ onChange={(e)=> handleChange(e)}></input>
 <div className="items-center justify-center h-14 w-full my-4">
 
 <input  type="text"
-{...register("userName", { required : true })} 
+{...register("username", { required : true })} 
 placeholder=' username'
-name='userName'
-value={user.userName}
+name='username'
+value={user.username}
 onChange={(e)=> handleChange(e)}></input>
- {errors.userName && <span className="text-red-500"> username is required</span>}
+ {errors.username && <span className="text-red-500"> username is required</span>}
 
 </div>
 {/* <label className='block text-black text-sm font-normal'>Email</label> */}
