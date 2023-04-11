@@ -30,7 +30,7 @@ const Login = ({user}) => {
       const { username, password } = loginData;
       const response = await UserService.login(username, password);
 
-      if (response) {
+      if (response&& response.role === 'USER') {
         setUserData(response);
         setLoginData({
           username: '',
@@ -39,6 +39,8 @@ const Login = ({user}) => {
         localStorage.setItem('user', JSON.stringify({ id: response.id }));
         
         navigate(`/profile/${userData.id}`);
+      } else if (response && response.role === 'ADMIN') {
+        navigate('/admin');
 
       } else {
         setErrorMessage('Invalid credentials');

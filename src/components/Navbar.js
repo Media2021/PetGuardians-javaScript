@@ -10,7 +10,9 @@ const Navbar = () => {
       <div className="flex items-center">
         <div className="ml-auto">
           <button className="text-white px-8 font-bold" onClick={() => navigate("/login")}>Login</button>
-          <button className="text-white font-bold" onClick={() => navigate("/addUser")}>Sign up</button>
+          <button className="text-white px-8  font-bold" onClick={() => navigate("/addUser")}>Sign up</button>
+          <button className="text-white font-bold" onClick={() => navigate("/")}>Home</button>
+       
         </div>
       </div>
     </div>

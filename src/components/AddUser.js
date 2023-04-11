@@ -20,7 +20,7 @@ const AddUser = () => {
     role:"User"
   })
 const navigate = useNavigate();
-
+ const [message, setMessage] = useState("");
 
   const handleChange = (e) =>{
     const value = e.target.value;
@@ -33,6 +33,7 @@ const saveUser = (e)=>{
   UserService.saveUser(user).then((response)=>
   {
     console.log(response);
+    setMessage("user saved successfully!");
     navigate("/Login.js");
 
   }).catch((error)=>
@@ -139,12 +140,12 @@ onChange={(e)=> handleChange(e)}></input>
 
 <div className="items-center justify-center h-14 w-full my-4">
 <input type="number"
-{...register("phone", { required : true, minLength: 9, maxLength:10 })}
+{...register("phone", { required : true, minLength: 10, maxLength:10 })}
 placeholder=' phone number'
 name='phone'
 value={user.phone}
 onChange={(e)=> handleChange(e)}></input>
- {errors.phone && <span className="text-red-500"> max number is 9</span>}
+ {errors.phone && <span className="text-red-500"> phone number is 10</span>}
 </div>
 
 
@@ -169,6 +170,7 @@ onChange={(e)=> handleChange(e)}></input>
  onClick={reset}>Delete</button>
 </div>
 </form>
+  {message && <div className="text-center bg-white text-black">{message}</div>}
 </div>
  </div>
     
