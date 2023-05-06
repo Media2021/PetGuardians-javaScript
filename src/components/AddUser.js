@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState} from 'react'
 import UserService from '../services/UserService'
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-
 
 
 const AddUser = () => {
@@ -56,10 +55,14 @@ const reset = (e) => {
     role:""
   });
 };
+
+
+  
   return (
     
     <div className="form  shadow border-b">
     <div className="px-10 py-10 ">
+     
       <div className="font-bold text-2xl text-white bg-black text-center">
             <h1> Sign up</h1>
            </div> 
@@ -139,7 +142,7 @@ onChange={(e)=> handleChange(e)}></input>
 {/* <label className='block text-black text-sm font-normal'>Phone</label> */}
 
 <div className="items-center justify-center h-14 w-full my-4">
-<input type="number"
+<input type="text"
 {...register("phone", { required : true, minLength: 10, maxLength:10 })}
 placeholder=' phone number'
 name='phone'

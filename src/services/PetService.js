@@ -1,4 +1,6 @@
 import axios from "axios";
+import TokenManager from "../Token/TokenManager";
+import jwt_decode from "jwt-decode";
 
 const Pet_api_base_url = "http://localhost:8081/pets";
 class PetService {
@@ -22,9 +24,10 @@ class PetService {
           }
         
           updatePet(pet, id) {
-            return axios.put(Pet_api_base_url + "/" + id, pet);
-          }
-    }
+            return axios.put(Pet_api_base_url + "/" + id, pet, {
+              headers: { Authorization: `Bearer ${TokenManager.getAccessToken()}` }
+            });
+          }}
 
     // eslint-disable-next-line import/no-anonymous-default-export
     export default new PetService();

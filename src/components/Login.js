@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import UserService from '../services/UserService';
 import { useNavigate } from 'react-router-dom';
+import TokenManager from "../Token/TokenManager";
 
 
-const Login = ({user}) => {
+const Login = () => {
   const [userData, setUserData] = useState({
     id: '',
     firstName: '',
@@ -16,32 +17,44 @@ const Login = ({user}) => {
     birthdate: '',
     role: '',
   });
-  const navigate = useNavigate();
 
   const [loginData, setLoginData] = useState({
     username: '',
     password: '',
   });
+
+  const [claims, setClaims] = useState(TokenManager.getClaims());
   const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
       const { username, password } = loginData;
-      const response = await UserService.login(username, password);
-
-      if (response&& response.role === 'USER') {
+      const response = await UserService.login(username, password)
+      
+      .catch(() => alert("Login failed!"))
+      .then(claims => setClaims(claims))
+      .then(userData)
+      .catch(error => console.error(error));
+    
+      const claims = TokenManager.getClaims();
+      if (claims?.roles?.includes('USER')&& claims?.userId) {
+    
+        UserService.getUserById(claims.userId)
         setUserData(response);
+        navigate(`/profile/${claims.userId}`, { state: { userData } });
         setLoginData({
           username: '',
           password: '',
+          
         });
-        localStorage.setItem('user', JSON.stringify({ id: response.id }));
-        
-        navigate(`/profile/${userData.id}`);
-      } else if (response && response.role === 'ADMIN') {
-        navigate('/admin');
 
+      } else if (claims?.roles?.includes('ADMIN')&& claims?.userId)  {
+        UserService.getUserById(claims.userId)
+        navigate(`/admin/${claims.userId}`,  { state: { claims } });
       } else {
         setErrorMessage('Invalid credentials');
       }
@@ -50,6 +63,7 @@ const Login = ({user}) => {
       setErrorMessage('Login failed');
     }
   };
+
 
   return (
     <div className="form shadow border-b">
@@ -86,7 +100,7 @@ const Login = ({user}) => {
             <div className="text-red-500 mb-4">{errorMessage}</div>
           )}
           <div className="items-center justify-center h-14 w-full my-4 space-x-4 pt-4">
-            <button onClick={(e, id) => handleSubmit(e, user.id)} className="rounded text-white font-semibold w-full bg-green-700 hover:bg-gray-700 py-2 px-16">
+            <button onClick={ handleSubmit} className="rounded text-white font-semibold w-full bg-green-700 hover:bg-gray-700 py-2 px-16">
               Login
             </button>
           </div>

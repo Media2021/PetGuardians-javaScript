@@ -36,17 +36,17 @@ const UpdateUser = () => {
     fetchData();
   }, [user.id]);
 
-  const updateUser = (e) => {
-    e.preventDefault();
-    console.log(user);
-    UserService.updateUser(user, id)
-      .then((response) => {
-        navigate("/UserList");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  // const updateUser = (e) => {
+  //   e.preventDefault();
+  //   console.log(user);
+  //   UserService.updateUser(user, id)
+  //     .then((response) => {
+  //       navigate("/UserList");
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 
   return (
     <div className="form  max-w-2xl mx-auto shadow border-b ">
@@ -151,7 +151,7 @@ const UpdateUser = () => {
         </div>
         <div className="items-center justify-center h-14 w-full my-4 space-x-4 pt-4">
           <button
-            onClick={updateUser}
+            // onClick={updateUser}
             className="rounded text-white font-semibold  bg-green-700 hover:bg-gray-700 py-2 px-6">
             Update
           </button>
