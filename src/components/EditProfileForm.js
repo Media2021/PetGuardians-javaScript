@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import UserService from '../services/UserService';
 import "../style/EditProfileForm.css";
 
-const EditProfileForm = ({ userData}) => {
+const EditProfileForm = ({ userData,onClose}) => {
   const [formData, setFormData] = useState({
     username:userData.username,
     firstName: userData.firstName,
@@ -30,6 +30,10 @@ const EditProfileForm = ({ userData}) => {
       console.log('Error while updating user data: ', error);
     }
   };
+  const handleCancel = () => {
+    onClose(); // Call the onClose function to close the form
+  };
+
   return (
     <form onSubmit={handleSubmit} className="edit-form">
            <label htmlFor="firstName">Username :</label>
@@ -110,15 +114,7 @@ const EditProfileForm = ({ userData}) => {
         </button>
         <button
           type="button"
-          onClick={() => setFormData({
-            firstName: userData.firstName,
-            lastName: userData.lastName,
-            email: userData.email,
-            address: userData.address,
-            phone: userData.phone,
-            // adoptedPets:userData.adoptedPets,
-            
-          })}
+          onClick={handleCancel}
           className="rounded text-white font-semibold bg-red-700 hover:bg-gray-500 py-1 px-4 mr-2 mt-4"
         >
           Cancel

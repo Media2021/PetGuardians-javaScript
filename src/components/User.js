@@ -7,7 +7,9 @@ const User = ({ user, deleteUser }) => {
   //   e.preventDefault();
   //   navigate(`/editUser/${id}`);
   // };
+  const petNames = user.adoptedPets ? user.adoptedPets.map((pet) => pet.name).join(", ") : "";
 
+  const formattedBirthdate = new Date(user.birthdate).toLocaleDateString();
   return (
     <tr key={user.id} className="tr">
       <td className="text-left px-2 py-4 whitespace-nowrap">
@@ -31,10 +33,12 @@ const User = ({ user, deleteUser }) => {
     
     
       <td className="text-left px-2 py-4 whitespace-nowrap">
-        <div className="text-sm bg-white text-black text-center">{user.birthdate}</div>
+        <div className="text-sm bg-white text-black text-center">{formattedBirthdate}</div>
       </td>
       <td className="text-left px-2 py-4 whitespace-nowrap">
-        <div className="text-sm bg-white text-black text-center">{user.adoptedPets}</div>
+      <div className="text-sm bg-white text-black text-center">
+      {petNames}
+        </div>
       </td>
       {/* <td className="text-right px-4 py-4 whitespace-nowrap font-medium text-sm">
         <button   onClick={(e, id) => editUser(e, user.id)}

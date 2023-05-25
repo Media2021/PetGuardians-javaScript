@@ -16,7 +16,7 @@ const AddUser = () => {
     password:"",
     phone:"",
     birthdate:"",
-    role:"User"
+    role:"USER"
   })
 const navigate = useNavigate();
  const [message, setMessage] = useState("");
@@ -52,7 +52,7 @@ const reset = (e) => {
     password:"",
     phone:"",
     birthdate:"",
-    role:""
+    role:"USER"
   });
 };
 

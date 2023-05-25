@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from "react";
 import PetService from "../services/PetService";
-
+import { useNavigate } from "react-router-dom";
 import "../style/PetsList.css";
 
 function Home() {
     const [loading, setLoading] = useState(true);
     const [pets, setPets] = useState(null);
     const [searchInput, setSearchInput] = useState("");
+    const navigate = useNavigate();
   
     useEffect(() => {
       const fetchData = async () => {
-        setLoading(true);
         try {
-          const response = await PetService.getPets();
-          setPets(response.data);
+          const response = await PetService.getAvailablePets();
+          setPets(response);
         } catch (error) {
-          console.log(error);
+          console.error('Error while getting available pets:', error);
+        } finally {
+          setLoading(false);
         }
-        setLoading(false);
       };
       fetchData();
     }, []);
@@ -37,7 +38,10 @@ function Home() {
             )
           : filteredPets;
    
-  
+          const handleAdoptButtonClick = (petId) => {
+             localStorage.setItem('selectedPetId', petId);
+             navigate(`/login?petId=${petId}`);
+          };
     return (
         <div>
         <div className="flex justify-center mb-4">
@@ -61,7 +65,10 @@ function Home() {
             <p>Status: {pet.status}</p>
             <p>Gender: {pet.gender}</p>
             <div className="buttons px-16">
-              <button className="rounded text-white font-semibold bg-black hover:bg-gray-500 py-1 px-6">
+              <button
+                className="rounded text-white font-semibold bg-black hover:bg-gray-500 py-1 px-6"
+                onClick={() => handleAdoptButtonClick(pet.id)}
+              >
                 Adopt
               </button>
             </div>

@@ -123,9 +123,9 @@ function AddPet() {
     onChange={(e)=> handleChange(e)}
   >
     <option value="">Select status</option>
-    <option value="available">Available</option>
-    <option value="pending">Pending</option>
-    <option value="adopted">Adopted</option>
+    <option value="AVAILABLE">AVAILABLE</option>
+    <option value="PENDING">PENDINGg</option>
+    <option value="ADOPTED">ADOPTED</option>
   </select>
   {errors.status && <span className="text-red-500">Status is required</span>}
 </div>

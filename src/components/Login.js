@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect,useState } from 'react';
 import UserService from '../services/UserService';
 import { useNavigate } from 'react-router-dom';
 import TokenManager from "../Token/TokenManager";
@@ -26,7 +26,11 @@ const Login = () => {
   const [claims, setClaims] = useState(TokenManager.getClaims());
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
-
+  const [petId, setPetId] = useState(null);
+  useEffect(() => {
+    const storedPetId = localStorage.getItem("selectedPetId");
+    setPetId(storedPetId);
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -45,7 +49,7 @@ const Login = () => {
     
         UserService.getUserById(claims.userId)
         setUserData(response);
-        navigate(`/profile/${claims.userId}`, { state: { userData } });
+        navigate(`/profile/${claims.userId}/${petId}`, { state: { userData  } });
         setLoginData({
           username: '',
           password: '',

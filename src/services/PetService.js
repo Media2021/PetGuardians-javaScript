@@ -15,12 +15,25 @@ class PetService {
         getPets(){
             return axios.get( Pet_api_base_url)
           }
+        getAvailablePets(){
+      return axios.get(`${Pet_api_base_url}/available`)
+      .then(response => response.data)
+      .catch(error => {
+        console.error('Error while getting available pets: ', error);
+        throw error;
+      });
+  
+  }
           deletePet(id) {
             return axios.delete(Pet_api_base_url + "/" + id);
           }
         
           getPetById(id) {
-            return axios.get(Pet_api_base_url + "/" + id);
+            return axios.get(Pet_api_base_url + "/" + id)
+            .then(response => response.data)
+            .catch(error => {
+              throw error;
+            });
           }
         
           updatePet(pet, id) {
