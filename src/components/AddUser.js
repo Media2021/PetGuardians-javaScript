@@ -33,7 +33,7 @@ const saveUser = (e)=>{
   {
     console.log(response);
     setMessage("user saved successfully!");
-    navigate("/Login.js");
+    navigate("/login");
 
   }).catch((error)=>
   {

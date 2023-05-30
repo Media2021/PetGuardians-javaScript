@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import UserService from '../services/UserService';
 import UserList from './UserList';
 import AdoptionList from './AdoptionList';
+import Notifications from '../components/WebSocket/Notifications';
 
 
 
@@ -16,6 +17,7 @@ const AdminDashboard = () =>{
   const [showPetsList , setShowPetsList ] = useState(false);
  const [showUsersList, setShowUsersList] = useState(false);
  const [showAdoptionRequestsList, setAdoptionRequestsList] = useState(false);
+ const [showNotifications, setShowNotifications] = useState(false);
  const [refreshFlag, setRefreshFlag] = useState(false);
 
  const refreshRequests = () => {
@@ -27,6 +29,7 @@ const AdminDashboard = () =>{
     setShowPetsList (false);
     setShowUsersList(false);
     setAdoptionRequestsList(false);
+    setShowNotifications(false);
   };
 
   const handleButtonClick2 = () => {
@@ -34,6 +37,7 @@ const AdminDashboard = () =>{
     setShowPetsList (true);
     setShowUsersList(false);
     setAdoptionRequestsList(false);
+    setShowNotifications(false);
   };
 
   const handleButtonClick3 = () => {
@@ -41,6 +45,7 @@ const AdminDashboard = () =>{
     setShowPetsList (false);
     setShowUsersList(true);
     setAdoptionRequestsList(false);
+    setShowNotifications(false);
   };
   
   const handleButtonClick4 = () => {
@@ -48,6 +53,15 @@ const AdminDashboard = () =>{
     setShowPetsList (false);
     setShowUsersList(false);
     setAdoptionRequestsList(true);
+    setShowNotifications(false);
+  };
+   
+  const handleButtonClick5 = () => {
+    setShowAddPet(false);
+    setShowPetsList (false);
+    setShowUsersList(false);
+    setAdoptionRequestsList(false);
+    setShowNotifications(true);
   };
   
   useEffect(() => {
@@ -69,12 +83,14 @@ const AdminDashboard = () =>{
       <button onClick={handleButtonClick2}className="btn">Show Pets  List </button>
       <button onClick={handleButtonClick3}className="btn">Show Users List </button>
       <button onClick={handleButtonClick4}className="btn">Show Adoption Requests List </button>
+      <button onClick={handleButtonClick5}className="btn">Notifications </button>
       {showAddPet && <AddPet />}
       {showPetsList  && <PetsList  />}
       {showUsersList  && <UserList  />}
       {showAdoptionRequestsList && <AdoptionList refreshRequests={refreshRequests} />}
-
+      {showNotifications && <Notifications />}
     </div>
+    
   );
 }
 

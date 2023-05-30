@@ -5,19 +5,16 @@ import EditProfileForm from '../components/EditProfileForm';
 import "../style/PetsList.css";
 import { useParams } from 'react-router-dom';
 import AdoptionRequestService from '../services/AdoptionRequestService';
+import Notifications from '../components/WebSocket/Notifications';
 
-
-
-
-const UserProfile= () => {
-  const { id ,petId } = useParams();
+const UserProfile = () => {
+  const { id, petId } = useParams();
   const [userData, setUserData] = useState(null);
   const [petData, setPetData] = useState(null);
   const [showEditProfile, setShowEditProfile] = useState(false);
+  const [showPetInfo, setShowPetInfo] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
   const [message, setMessage] = useState('');
-
-
-  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,10 +26,6 @@ const UserProfile= () => {
       }
     };
     fetchData();
-
-   
-    
-  
   }, [id]);
 
   useEffect(() => {
@@ -51,45 +44,52 @@ const UserProfile= () => {
   }, [petId]);
 
   const handlePetButtonClicked = () => {
-    // Assuming petId is defined and contains the pet ID
     const request = {
       id: null, // The server will generate the ID
       user: { id: userData.id }, // Include the user ID in the user object
       pet: { id: petData.id }, // Include the pet ID in the pet object
       status: 'PENDING', // Set the initial status
-      notes: 'in progress', // Include any additional notes if necessary
-      requestDate: new Date().toISOString(), 
+      notes: 'in progress',
+      requestDate: new Date().toISOString(),
     };
-  
+
     AdoptionRequestService.createAdoptionRequest(request)
       .then(response => {
-        setMessage('Adoption request has been  sent!');
+        setMessage('Adoption request has been sent!');
       })
       .catch(error => {
-        // Error occurred while sending the adoption request
         console.log('Error while sending adoption request:', error);
       });
   };
-  
 
   const handleEditProfileClick = () => {
     setShowEditProfile(true);
-  }
+  };
 
+  const handlePetInfoButtonClick = () => {
+    setShowPetInfo(true);
+    setShowNotifications(false);
+  };
 
-  if (!userData) {
-    return <div>Loading...</div>;
-  }
+  const handleNotificationsButtonClick = () => {
+    setShowPetInfo(false);
+    setShowNotifications(true);
+  };
+
   const handleFormClose = () => {
     setShowEditProfile(false);
   };
 
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
+
   const formattedBirthdate = new Date(userData.birthdate).toLocaleDateString();
+
   return (
-    <div className="flex justify-center flex-wrap">
+    <div className="flex justify-between flex-wrap">
       <div className="pet-card">
         <h3 className="text-lg font-bold">Hello {userData.username}</h3>
-      
         <p>First Name: {userData.firstName}</p>
         <p>Last Name: {userData.lastName}</p>
         <p>Email: {userData.email}</p>
@@ -103,34 +103,57 @@ const UserProfile= () => {
           <button className="rounded text-white font-semibold bg-red-700 hover:bg-gray-500 py-1 px-4 mr-2 mt-4 ">
             Delete Account
           </button>
-          <button onClick={handleEditProfileClick} className="rounded text-white font-semibold bg-black hover:bg-gray-500 py-1 px-8">
+          <button
+            onClick={handleEditProfileClick}
+            className="rounded text-white font-semibold bg-black hover:bg-gray-500 py-1 px-8"
+          >
             Edit Profile
           </button>
         </div>
       </div>
-      {showEditProfile && <EditProfileForm  userData={userData} onClose={handleFormClose}/>}
 
-    {petData && (
-      <div className="pet-card">
-        <h3 className="text-lg font-bold">Pet Information</h3>
-        <p>Name: {petData.name}</p>
-        <p>Age: {petData.age}</p>
-        <p>Gender: {petData.gender}</p>
-        <p>Status: {petData.status}</p>
-        <p>Type: {petData.type}</p>
+      {showEditProfile && <EditProfileForm userData={userData} onClose={handleFormClose} />}
+
+      {showPetInfo && petData && (
+        <div className="pet-card">
+          <h3 className="text-lg font-bold">Pet Information</h3>
+          <p>Name: {petData.name}</p>
+          <p>Age: {petData.age}</p>
+          <p>Gender: {petData.gender}</p>
+          <p>Status: {petData.status}</p>
+          <p>Type: {petData.type}</p>
+          <button
+            className="rounded text-white font-semibold bg-black hover:bg-gray-500 py-2 px-8"
+            onClick={handlePetButtonClicked}
+          >
+            Adopt
+          </button>
+          {message && <p>{message}</p>}
+        </div>
+      )}
+
+      <div className="buttons px-18">
         <button
-      className="rounded text-white font-semibold bg-black hover:bg-gray-500 py-2 px-8"
-      onClick={ handlePetButtonClicked}
-    >
-      Adopt
-    </button>
-    {message && <p>{message}</p>}
+          onClick={handlePetInfoButtonClick}
+          className="rounded text-white font-semibold bg-black hover:bg-gray-500 py-1 px-8 mt-4 "
+        >
+          Pet Information
+        </button>
+        <button
+          onClick={handleNotificationsButtonClick}
+          className="rounded text-white font-semibold bg-black hover:bg-gray-500 py-1 px-8 mt-4 mx-2"
+        >
+          Notifications
+        </button>
       </div>
-    )}
-  </div>
+
+      {showNotifications && (
+        <div className="notification">
+          <Notifications />
+        </div>
+      )}
+    </div>
   );
 };
 
-
-
-export default UserProfile
+export default UserProfile;
