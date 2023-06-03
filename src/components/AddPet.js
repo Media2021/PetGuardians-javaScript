@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import PetService from '../services/PetService'
 import { useForm } from 'react-hook-form';
+import TokenManager from '../Token/TokenManager';
 
 
 
@@ -15,7 +16,8 @@ function AddPet() {
         description:"",
         type:"",
         status:"",
-        gender:""
+        gender:"",
+       
 
       })
       const [message, setMessage] = useState("");
@@ -29,7 +31,8 @@ function AddPet() {
       const savePet = (e)=>{
   
         console.log(pet);
-        PetService.savePet(pet).then((response)=>
+        const token = TokenManager.getAccessToken();
+        PetService.savePet(pet, token).then((response)=>
         {
           console.log(response);
           setMessage("Pet saved successfully!");
@@ -55,7 +58,7 @@ function AddPet() {
 
 
     return (
-        <div className="form  shadow border-b">
+        <div className="form  shadow-black border-b ">
         <div className="px-10 py-10 ">
           <div className="font-bold text-2xl text-white bg-black text-center">
                 <h1> Add new pet</h1>

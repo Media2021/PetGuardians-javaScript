@@ -51,14 +51,14 @@ function AdoptionList ({request,refreshRequests }) {
         <p>Request date : {new  Date (request.requestDate).toLocaleDateString()}</p>
         <p>Status: {request.status}</p>
        
-        <div className="buttons px-16">
+        <div className="button-container">
           <button
-            className="rounded text-white  font-semibold bg-red-700 hover:bg-gray-500 py-1 px-4 mr-2"
+            className="rounded text-white  font-semibold bg-red-700 hover:bg-gray-500 mr-2 py-1 px-8 mt-3"
             onClick={() => declineRequest(request.id)}
           >
             Decline 
           </button>
-          <button  onClick={() => acceptRequest(request.id)} className="rounded text-white font-semibold bg-black hover:bg-gray-500 py-1 px-6">
+          <button  onClick={() => acceptRequest(request.id)} className="rounded text-white font-semibold bg-black hover:bg-gray-500 py-1 px-6 ml-2">
             Accept
           </button>
         </div>

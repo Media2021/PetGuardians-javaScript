@@ -7,6 +7,7 @@ import UserService from '../services/UserService';
 import UserList from './UserList';
 import AdoptionList from './AdoptionList';
 import Notifications from '../components/WebSocket/Notifications';
+import Statistics from './Statistics';
 
 
 
@@ -19,9 +20,10 @@ const AdminDashboard = () =>{
  const [showAdoptionRequestsList, setAdoptionRequestsList] = useState(false);
  const [showNotifications, setShowNotifications] = useState(false);
  const [refreshFlag, setRefreshFlag] = useState(false);
+ const [showStatistics, setShowStatistics] = useState(false);
 
  const refreshRequests = () => {
-  setRefreshFlag(!refreshFlag); // Toggle the refresh flag to trigger re-rendering of the AdoptionList component
+  setRefreshFlag(!refreshFlag); 
 };
 
   const handleButtonClick1 = () => {
@@ -30,6 +32,7 @@ const AdminDashboard = () =>{
     setShowUsersList(false);
     setAdoptionRequestsList(false);
     setShowNotifications(false);
+    setShowStatistics(false);
   };
 
   const handleButtonClick2 = () => {
@@ -38,6 +41,7 @@ const AdminDashboard = () =>{
     setShowUsersList(false);
     setAdoptionRequestsList(false);
     setShowNotifications(false);
+    setShowStatistics(false);
   };
 
   const handleButtonClick3 = () => {
@@ -46,6 +50,7 @@ const AdminDashboard = () =>{
     setShowUsersList(true);
     setAdoptionRequestsList(false);
     setShowNotifications(false);
+    setShowStatistics(false);
   };
   
   const handleButtonClick4 = () => {
@@ -54,6 +59,7 @@ const AdminDashboard = () =>{
     setShowUsersList(false);
     setAdoptionRequestsList(true);
     setShowNotifications(false);
+    setShowStatistics(false);
   };
    
   const handleButtonClick5 = () => {
@@ -62,6 +68,15 @@ const AdminDashboard = () =>{
     setShowUsersList(false);
     setAdoptionRequestsList(false);
     setShowNotifications(true);
+    setShowStatistics(false);
+  };
+  const handleButtonClick6 = () => {
+    setShowAddPet(false);
+    setShowPetsList(false);
+    setShowUsersList(false);
+    setAdoptionRequestsList(false);
+    setShowNotifications(false);
+    setShowStatistics(true);
   };
   
   useEffect(() => {
@@ -84,11 +99,17 @@ const AdminDashboard = () =>{
       <button onClick={handleButtonClick3}className="btn">Show Users List </button>
       <button onClick={handleButtonClick4}className="btn">Show Adoption Requests List </button>
       <button onClick={handleButtonClick5}className="btn">Notifications </button>
+      <button onClick={handleButtonClick6} className="btn">Calculate  Statistics</button>
+
+     
       {showAddPet && <AddPet />}
       {showPetsList  && <PetsList  />}
       {showUsersList  && <UserList  />}
       {showAdoptionRequestsList && <AdoptionList refreshRequests={refreshRequests} />}
       {showNotifications && <Notifications />}
+      {showStatistics && <Statistics />}
+
+     
     </div>
     
   );

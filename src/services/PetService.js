@@ -4,14 +4,20 @@ import jwt_decode from "jwt-decode";
 
 const Pet_api_base_url = "http://localhost:8081/pets";
 class PetService {
-    savePet(pet) {
-      return axios.post(Pet_api_base_url, pet)
-        .then(response => response.data)
-        .catch(error => {
-          console.error("Error while saving pet: ", error);
-          throw error;
+  savePet(pet) {
+    const headers = {
+        Authorization: `Bearer ${TokenManager.getAccessToken()}`,
+        "Content-Type": "application/json",
+    };
+    
+    return axios
+        .post(Pet_api_base_url, pet, { headers })
+        .then((response) => response.data)
+        .catch((error) => {
+            console.error("Error while saving pet: ", error);
+            throw error;
         });
-    }
+}
         getPets(){
             return axios.get( Pet_api_base_url)
           }
@@ -24,10 +30,69 @@ class PetService {
       });
   
   }
-          deletePet(id) {
-            return axios.delete(Pet_api_base_url + "/" + id);
-          }
-        
+  getCountPets(){
+    return axios.get(`${Pet_api_base_url}/count`)
+    .then(response => response.data)
+    .catch(error => {
+      console.error('Error while getting available pets: ', error);
+      throw error;
+    });
+
+}
+getAvailableCats(){
+  const headers = {
+    Authorization: `Bearer ${TokenManager.getAccessToken()}`,
+    "Content-Type": "application/json",
+};
+  return axios.get(`${Pet_api_base_url}/available/cats`,{ headers })
+  .then(response => response.data)
+  .catch(error => {
+    console.error('Error while getting available pets: ', error);
+    throw error;
+  });
+
+}  
+getAvailableDogs(){
+  return axios.get(`${Pet_api_base_url}/available/dogs`)
+  .then(response => response.data)
+  .catch(error => {
+    console.error('Error while getting available pets: ', error);
+    throw error;
+  });
+
+}   
+
+getAdoptedDogs(){
+  return axios.get(`${Pet_api_base_url}/adopted/dogs`)
+  .then(response => response.data)
+  .catch(error => {
+    console.error('Error while getting available pets: ', error);
+    throw error;
+  });
+}
+
+getAdoptedCats(){
+  return axios.get(`${Pet_api_base_url}/adopted/cats`)
+  .then(response => response.data)
+  .catch(error => {
+    console.error('Error while getting available pets: ', error);
+    throw error;
+  });
+
+}
+
+
+getAdoptedPets(petType){
+  return axios.get(`${Pet_api_base_url}/adoptedCount/${petType}`)
+  .then(response => response.data)
+  .catch(error => {
+    console.error('Error while getting available pets: ', error);
+    throw error;
+  });
+
+}  
+
+
           getPetById(id) {
             return axios.get(Pet_api_base_url + "/" + id)
             .then(response => response.data)
@@ -36,11 +101,14 @@ class PetService {
             });
           }
         
-          updatePet(pet, id) {
-            return axios.put(Pet_api_base_url + "/" + id, pet, {
-              headers: { Authorization: `Bearer ${TokenManager.getAccessToken()}` }
-            });
-          }}
-
+          updatePet(id, updatedPet, config) {
+            return axios.put(`${Pet_api_base_url}/${id}`, updatedPet, config)
+              .then(response => response.data)
+              .catch(error => {
+                throw error.response.data;
+              });
+          }
+          
+        }
     // eslint-disable-next-line import/no-anonymous-default-export
     export default new PetService();

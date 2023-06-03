@@ -6,35 +6,52 @@ function UpdatePet() {
     const { id } = useParams();
   const navigate = useNavigate();
     const [pet, setPet] = useState({
-        id:id,
-        name:"",
-        age:"",
-        description:"",
-        type:"",
-        status:"",
-        gender:""
-        
+      id: id,
+      name:"",
+      age: "",
+      description: "",
+      type: "",
+      status: "",
+      adopter: {
+        id: null,
+        firstName: null,
+        lastName: null,
+        username: null,
+        email: null,
+        address: null,
+        password: null,
+        phone: null,
+        birthdate: null,
+        role: null,
+        adoptedPets: []
+      },
+      gender: ""
 
       })
       const [message, setMessage] = useState("");
 
 
       const handleChange = (e) =>{
-        const value = e.target.value;
-        setPet({...pet, [e.target.name]:value})
-    
-      }
+        const { id, value } = e.target;
+        setPet((prevPet) => ({
+          ...prevPet,
+          [id]: value || "", // Provide a default value of an empty string if `value` is null or undefined
+        }));
+      };
       useEffect(() => {
         const fetchData = async () => {
           try {
-            const response = await PetService.getPetById(pet.id);
-            setPet(response.data);
+            const response = await PetService.getPetById(id);
+            const petData = response.data;
+            if (petData.id) {
+              setPet(petData);
+            }
           } catch (error) {
             console.log(error);
           }
         };
         fetchData();
-      }, [pet.id]);
+      }, [id]);
     
       const updatePet = (e) => {
         e.preventDefault();
@@ -59,12 +76,13 @@ function UpdatePet() {
    
     <div className="items-center justify-center h-12 w-full my-4">
     
-    <input type="text"
-  
-    placeholder=' name'
-    name='name'
-    value={pet.name}
-    onChange={(e)=> handleChange(e)}/>
+    <input
+  type="text"
+  placeholder="name"
+  name="name"
+  value={pet.name || ""}
+  onChange={(e) => handleChange(e)}
+/>
     
       
     </div>
@@ -75,7 +93,7 @@ function UpdatePet() {
     
     placeholder=' age'
     name='age'
-    value={pet.age}
+    value={pet.age || ""}
     onChange={(e)=> handleChange(e)}></input>
     
     </div>
@@ -87,8 +105,18 @@ function UpdatePet() {
     
     placeholder=' description'
     name='description'
-    value={pet.description}
+    value={pet.description || ""}
     onChange={(e)=> handleChange(e)}></input>
+    
+    
+    </div>
+    <div className="items-center justify-center h-14 w-full my-4">
+    
+    <input   type="text"
+  placeholder="adopter"
+  name="adopterId"
+  value={pet.adopterId || ""}
+  onChange={(e) => handleChange(e)}></input>
     
     
     </div>
@@ -97,7 +125,7 @@ function UpdatePet() {
   <select
    
     name="type"
-    value={pet.type}
+    value={pet.type || ""}
     onChange={(e) => handleChange(e)}
   >
     <option value="">Select a type</option>
@@ -114,7 +142,7 @@ function UpdatePet() {
   <select
    
     name='status'
-    value={pet.status}
+    value={pet.status || ""}
     onChange={(e)=> handleChange(e)}
   >
     <option value="">Select status</option>
@@ -131,7 +159,7 @@ function UpdatePet() {
   <select
   
     name="gender"
-    value={pet.gender}
+    value={pet.gender }
     onChange={(e) => handleChange(e)}
   >
     <option value="">Select gender</option>

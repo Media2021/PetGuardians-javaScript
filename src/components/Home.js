@@ -8,6 +8,8 @@ function Home() {
     const [pets, setPets] = useState(null);
     const [searchInput, setSearchInput] = useState("");
     const navigate = useNavigate();
+    const [ageFilter, setAgeFilter] = useState("");
+    const [nameFilter, setNameFilter] = useState("");
   
     useEffect(() => {
       const fetchData = async () => {
@@ -28,8 +30,11 @@ function Home() {
       };
     
       const filteredPets = pets?.filter(
-        (pet) => pet.type.toUpperCase() === "CAT" || pet.type.toUpperCase() === "DOG"
-      );
+        (pet) =>
+        (pet.type.toUpperCase() === "CAT" || pet.type.toUpperCase() === "DOG") &&
+        (ageFilter === "" || pet.age.toString() === ageFilter) &&
+        (nameFilter === "" || pet.name.toUpperCase().includes(nameFilter))
+    );
     
       const searchedPets =
         searchInput !== ""
@@ -37,10 +42,11 @@ function Home() {
               pet.type.toUpperCase().includes(searchInput)
             )
           : filteredPets;
+
    
           const handleAdoptButtonClick = (petId) => {
-             localStorage.setItem('selectedPetId', petId);
-             navigate(`/login?petId=${petId}`);
+              localStorage.setItem('selectedPetId', petId);
+                  navigate(`/login?petId=${petId}`);
           };
     return (
         <div>
@@ -54,6 +60,35 @@ function Home() {
             onChange={handleSearchInputChange}
           />
         </div>
+        <div className="flex justify-center mb-4">
+  <select
+    value={ageFilter}
+    onChange={(e) => setAgeFilter(e.target.value)}
+    className="p-2 rounded-lg"
+    style={{ width: "150px", marginRight: "10px" }}
+  >
+    <option value="">All Ages</option>
+    <option value="0">0</option>
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+  <option value="5">5</option>
+  <option value="6">6</option>
+  <option value="7">7</option>
+  <option value="8">8</option>
+  <option value="9">9</option>
+  </select>
+  <input
+          type="text"
+          placeholder="Search by pet name"
+          className="p-2 rounded-lg"
+          style={{ width: "150px" }}
+          value={nameFilter}
+          onChange={(e) => setNameFilter(e.target.value.toUpperCase())}
+        />
+</div>
+
         
       <div className="flex  justify-center py-8 flex-wrap">
         {searchedPets?.map((pet) => (

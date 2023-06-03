@@ -49,7 +49,7 @@ const Login = () => {
     
         UserService.getUserById(claims.userId)
         setUserData(response);
-        navigate(`/profile/${claims.userId}/${petId}`, { state: { userData  } });
+        navigate(`/profile/${claims.userId}`, { state: { userData  } });
         setLoginData({
           username: '',
           password: '',

@@ -1,4 +1,5 @@
 import axios from "axios";
+import TokenManager from "../Token/TokenManager";
 
 
 
@@ -6,7 +7,11 @@ const Adoption_api_base_url = "http://localhost:8081/adoption";
 
 class AdoptionRequestService {
     createAdoptionRequest(request) {
-        return axios.post(Adoption_api_base_url, request)
+      const headers = {
+        Authorization: `Bearer ${TokenManager.getAccessToken()}`,
+        "Content-Type": "application/json",
+    };
+        return axios.post(Adoption_api_base_url, request,{headers})
           .then(response => response.data)
           .catch(error => {
             throw error.response.data;
@@ -52,9 +57,24 @@ class AdoptionRequestService {
             throw error.response.data;
           });
       }
-}
+      getAdoptionRequestsByUserId(userId) {
+        return axios.get(`${Adoption_api_base_url}/${userId}/adoption-requests`)
+          .then(response => response.data)
+          .catch(error => {
+            throw error.response.data;
+          });
+      }
 
+      getAdoptedPetsSize(petType)
+      {
+        return axios.get(`${Adoption_api_base_url}/count/${petType}`)
+        .then(response => response.data)
+        .catch(error => {
+          throw error.response.data;
+        });
+      }
 
+      }
     // eslint-disable-next-line import/no-anonymous-default-export
 
     export default new AdoptionRequestService ();
