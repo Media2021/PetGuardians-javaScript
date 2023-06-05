@@ -1,19 +1,26 @@
-
 import './Notifications.css';
 
-
-
 const UsernamePlaceholder = (props) => {
-    if (props.username) {
-      return (<h2 className="username-header">my username : {props.username}</h2>)
-    }
-
+  if (props.username) {
     return (
-      <>
-        <label htmlFor='username'className="username-label">Username : </label>
-        <input id='username' type='text' onBlur={(event) => props.onUsernameInformed(event.target.value)} />
-      </>
+      <h2 className="username-header">My username: {props.username}</h2>
     );
   }
 
-  export default UsernamePlaceholder;
+  return (
+    <div className="FromTo">
+      <label htmlFor="username" className="username-label">
+        Username:
+      </label>
+      <input
+        id="username"
+        className="message-input"
+        type="text"
+        value={props.username}
+        onChange={(event) => props.onUsernameInformed(event.target.value)}
+      />
+    </div>
+  );
+}
+
+export default UsernamePlaceholder;

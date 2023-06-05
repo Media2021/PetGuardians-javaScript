@@ -5,9 +5,9 @@ const SendMessagePlaceholder = (props) => {
   const [message, setMessage] = useState('');
   const [destinationUsername, setDestinationUsername] = useState('');
 
-  if (!props.username) {
-    return <></>;
-  }
+  // if (!props.username) {
+  //   return <></>;
+  // }
 
   const onMessageSend = () => {
     if (!message) {
@@ -23,13 +23,14 @@ const SendMessagePlaceholder = (props) => {
   }
 
   return (
+    
     <form onSubmit={onSubmit}>
       <div className="FromTo">
         <label className="username-label" htmlFor='message'>Type ur SMS:  </label>
         <input id='message' type='text' className="message-input" onChange={(event) => setMessage(event.target.value)} value={message} />
       </div>
       <div className="FromTo">
-        <label htmlFor='destUsername' className="username-label"> Send to : </label>
+        <label htmlFor='destUsername' className="username-label"> Send to  : </label>
         <input id='destUsername' type='text' className="destination-input" onChange={(event) => setDestinationUsername(event.target.value)} />
       
       <button className="send-button " onClick={onMessageSend}>Send</button></div>

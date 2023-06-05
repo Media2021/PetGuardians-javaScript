@@ -38,11 +38,13 @@ const UserProfile = () => {
       fetchSelectedPet();
     }
   }, [petId]);
+  
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await UserService.getUserById(id);
+        localStorage.setItem("username", response.username); 
         setUserData(response);
       } catch (error) {
         console.log('Error while fetching user data: ', error);
@@ -71,6 +73,7 @@ const UserProfile = () => {
     setPetId(storedPetId);
   }, []);
 
+ 
 
   const handleEditProfileClick = () => {
     setShowEditProfile(true);
@@ -138,11 +141,13 @@ const UserProfile = () => {
 
 
   if (!userData) {
-    return <div>Loading...</div>;
+    return <div className='session ' style={{ fontSize: '20px'  }} >Session is expired you need to login again ...</div>;
   }
 
   const formattedBirthdate = new Date(userData.birthdate).toLocaleDateString();
 
+
+  
   return (
     <div className="flex justify-between flex-wrap">
       <div className="user-profile-info">
@@ -236,7 +241,7 @@ const UserProfile = () => {
 
       {showNotifications && (
         <div className="notification">
-          <Notifications />
+          <Notifications  username={userData.username}/>
         </div>
       )}
   

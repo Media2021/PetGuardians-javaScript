@@ -83,6 +83,7 @@ const AdminDashboard = () =>{
     const fetchData = async () => {
       try {
         const response = await UserService.getUserById(id);
+        localStorage.setItem("username", response.username); 
         setUserData(response);
       } catch (error) {
         console.log('Error while fetching user data: ', error);
@@ -106,7 +107,7 @@ const AdminDashboard = () =>{
       {showPetsList  && <PetsList  />}
       {showUsersList  && <UserList  />}
       {showAdoptionRequestsList && <AdoptionList refreshRequests={refreshRequests} />}
-      {showNotifications && <Notifications />}
+      {showNotifications && <Notifications username={userData.username}/>}
       {showStatistics && <Statistics />}
 
      

@@ -48,6 +48,7 @@ const Login = () => {
       if (claims?.roles?.includes('USER')&& claims?.userId) {
     
         UserService.getUserById(claims.userId)
+        localStorage.setItem('username', userData.username); 
         setUserData(response);
         navigate(`/profile/${claims.userId}`, { state: { userData  } });
         setLoginData({
@@ -58,6 +59,7 @@ const Login = () => {
 
       } else if (claims?.roles?.includes('ADMIN')&& claims?.userId)  {
         UserService.getUserById(claims.userId)
+       localStorage.setItem('username', userData.username); 
         navigate(`/admin/${claims.userId}`,  { state: { claims } });
       } else {
         setErrorMessage('Invalid credentials');
@@ -70,7 +72,7 @@ const Login = () => {
 
 
   return (
-    <div className="form shadow border-b">
+    <div className="form  box-shadow: 0 4px 18px rgba(6, 6, 6, 0.8);">
       <div className="px-10 py-10">
         <div className="font-bold text-2xl text-white bg-black text-center">
           <h1> Login</h1>

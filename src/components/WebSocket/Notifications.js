@@ -5,17 +5,17 @@ import ChatMessagesPlaceHolder from '../WebSocket/ChatMessagesPlaceHolder';
 import UsernamePlaceholder from '../WebSocket/UsernamePlaceholder';
 import SendMessagePlaceholder from '../WebSocket/SendMessagePlaceholder';
 import './Notifications.css';
+import smileyImage from '../WebSocket/yeeee.jfif';
 
-function Notifications() {
+
+function Notifications({ username }) {
   const [stompClient, setStompClient] = useState(null);
-  const [username, setUsername] = useState(() => sessionStorage.getItem('username') || '');
   const [messagesReceived, setMessagesReceived] = useState([]);
   const [sentMessages, setSentMessages] = useState([]);
+  const [storedUsername, setStoredUsername] = useState(localStorage.getItem("username"));
 
   useEffect(() => {
-    sessionStorage.setItem('username', username);
-
-    if (username && !stompClient) {
+    if (storedUsername && !stompClient) {
       const client = new Client({
         brokerURL: 'ws://localhost:8081/ws',
         reconnectDelay: 5000,
@@ -38,7 +38,6 @@ function Notifications() {
 
       client.activate();
       setStompClient(client);
-      
     }
   }, [username, stompClient]);
 
@@ -49,7 +48,6 @@ function Notifications() {
         from: username,
         to: newMessage.to,
         text: newMessage.text,
-        
       };
       if (payload.to) {
         stompClient.publish({
@@ -68,12 +66,12 @@ function Notifications() {
 
   const onMessageReceived = (data) => {
     const message = JSON.parse(data.body);
-   
+
     if (message.from === username) {
       // Ignore messages sent by the current user
       return;
     }
-  
+
     if (message.from === username) {
       setSentMessages((sentMessages) => [...sentMessages, message]);
     } else {
@@ -85,20 +83,16 @@ function Notifications() {
       });
     }
   };
-  
-
-  const onUsernameInformed = (username) => {
-    setUsername(username);
-  };
 
   return (
     <div className="notifications">
       <div className="notification-content">
-        <UsernamePlaceholder
-          className="username-placeholder"
-          username={username}
-          onUsernameInformed={onUsernameInformed}
-        />
+        <div className="FromTo">
+          <label className="username-label text-green-900 " htmlFor="username" style={{ fontSize: '15px' }}>
+          WhatsApp: {storedUsername} <img src={smileyImage} alt="smiley"  style={{ width: '130px', height: '100px' }}  />
+          </label>
+        </div>
+        <br />
         <br />
         <SendMessagePlaceholder
           className="send-message-placeholder"

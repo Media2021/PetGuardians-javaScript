@@ -18,7 +18,7 @@ const MessageSent = (props) => {
 };
 
 const ChatMessagesPlaceholder = (props) => {
-  const { username, sentMessages, messagesReceived } = props;
+  const {  sentMessages, messagesReceived } = props;
   
   const combinedMessages = [];
   let sentIndex = 0;
@@ -40,13 +40,13 @@ const ChatMessagesPlaceholder = (props) => {
     <div className="messages-container">
       <h2 className="h2">Messages:</h2>
       {combinedMessages.map((message) => {
-        if (message.from === username) {
+        if (message.from === props.username) {
           return (
             <MessageSent
               key={message.id}
               from={message.from}
               text={message.text}
-              direct={message.to.includes(username)}
+              direct={message.to.includes(props.username)}
             />
           );
         } else {
@@ -55,7 +55,7 @@ const ChatMessagesPlaceholder = (props) => {
               key={message.id}
               from={message.from}
               text={message.text}
-              direct={message.to.includes(username)}
+              direct={message.to.includes(props.username)}
             />
           );
         }
