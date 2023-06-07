@@ -93,16 +93,17 @@ const AdminDashboard = () =>{
   }, [id, refreshFlag]);
  
   return (
-    <div >
-      <h1 className='text-3xl '>Admin Dashboard</h1>
+    <div>
+    <div className='admin-buttons' >
+      
       <button onClick={handleButtonClick1}className="btn">Add new Pet</button>
       <button onClick={handleButtonClick2}className="btn">Show Pets  List </button>
       <button onClick={handleButtonClick3}className="btn">Show Users List </button>
       <button onClick={handleButtonClick4}className="btn">Show Adoption Requests List </button>
       <button onClick={handleButtonClick5}className="btn">Notifications </button>
       <button onClick={handleButtonClick6} className="btn">Calculate  Statistics</button>
-
-     
+     </div>
+<div>
       {showAddPet && <AddPet />}
       {showPetsList  && <PetsList  />}
       {showUsersList  && <UserList  />}
@@ -112,7 +113,7 @@ const AdminDashboard = () =>{
 
      
     </div>
-    
+    </div>
   );
 }
 

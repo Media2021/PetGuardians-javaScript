@@ -149,7 +149,7 @@ const UserProfile = () => {
 
   
   return (
-    <div className="flex justify-between flex-wrap">
+    <div className="flex justify-between flex-wrap ">
       <div className="user-profile-info">
         <h3 className="text-lg font-bold">Hello {userData.username}</h3>
         <p>First Name: {userData.firstName}</p>

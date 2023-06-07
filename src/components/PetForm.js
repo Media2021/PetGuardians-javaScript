@@ -17,7 +17,7 @@ function PetForm({ pet, onCancel, onUpdate }) {
   };
 
   return (
-    <div className="form shadow border-b mt-12" style={{ backgroundColor: "antiquewhite", border: "1px solid #ddd", borderRadius: "8px" }}>
+    <div className="form  box-shadow: 0 4px 18px rgba(6, 6, 6, 0.8); mt-12" style={{ backgroundColor: "antiquewhite", border: "1px solid #ddd", borderRadius: "8px" }}>
       
       <form  className="px-10 py-8 mt-1 " onSubmit={handleSubmit}>
        <div className="items-center justify-center h-12 w-full my-4">
