@@ -21,17 +21,20 @@ class PetService {
         getPets(){
             return axios.get( Pet_api_base_url)
           }
+          
         getAvailablePets(){
       return axios.get(`${Pet_api_base_url}/available`)
+      
       .then(response => response.data)
+      
       .catch(error => {
         console.error('Error while getting available pets: ', error);
         throw error;
       });
   
   }
-  getCountPets(){
-    return axios.get(`${Pet_api_base_url}/count`)
+  countAvailablePets(){
+    return axios.get(`${Pet_api_base_url}/available/count`)
     .then(response => response.data)
     .catch(error => {
       console.error('Error while getting available pets: ', error);
@@ -39,58 +42,95 @@ class PetService {
     });
 
 }
-getAvailableCats(){
-  const headers = {
-    Authorization: `Bearer ${TokenManager.getAccessToken()}`,
-    "Content-Type": "application/json",
-};
-  return axios.get(`${Pet_api_base_url}/available/cats`,{ headers })
-  .then(response => response.data)
-  .catch(error => {
-    console.error('Error while getting available pets: ', error);
-    throw error;
-  });
-
-}  
-getAvailableDogs(){
-  return axios.get(`${Pet_api_base_url}/available/dogs`)
-  .then(response => response.data)
-  .catch(error => {
-    console.error('Error while getting available pets: ', error);
-    throw error;
-  });
-
-}   
-
-getAdoptedDogs(){
-  return axios.get(`${Pet_api_base_url}/adopted/dogs`)
-  .then(response => response.data)
-  .catch(error => {
-    console.error('Error while getting available pets: ', error);
-    throw error;
-  });
-}
-
-getAdoptedCats(){
-  return axios.get(`${Pet_api_base_url}/adopted/cats`)
-  .then(response => response.data)
-  .catch(error => {
-    console.error('Error while getting available pets: ', error);
-    throw error;
-  });
+  getCountPets(){
+    return axios.get(`${Pet_api_base_url}/all/count`)
+    .then(response => response.data)
+    .catch(error => {
+      console.error('Error while getting available pets: ', error);
+      throw error;
+    });
 
 }
+// getAvailableCats(){
+//   const headers = {
+//     Authorization: `Bearer ${TokenManager.getAccessToken()}`,
+//     "Content-Type": "application/json",
+// };
+//   return axios.get(`${Pet_api_base_url}/available/cats`,{ headers })
+//   .then(response => response.data)
+//   .catch(error => {
+//     console.error('Error while getting available pets: ', error);
+//     throw error;
+//   });
+
+// }  
+// getAvailableDogs(){
+//   return axios.get(`${Pet_api_base_url}/available/dogs`)
+//   .then(response => response.data)
+//   .catch(error => {
+//     console.error('Error while getting available pets: ', error);
+//     throw error;
+//   });
+
+// }   
+
+// getAdoptedDogs(){
+//   return axios.get(`${Pet_api_base_url}/adopted/dogs`)
+//   .then(response => response.data)
+//   .catch(error => {
+//     console.error('Error while getting available pets: ', error);
+//     throw error;
+//   });
+// }
+
+// getAdoptedCats(){
+//   return axios.get(`${Pet_api_base_url}/adopted/cats`)
+//   .then(response => response.data)
+//   .catch(error => {
+//     console.error('Error while getting available pets: ', error);
+//     throw error;
+//   });
+
+// }
 
 
-getAdoptedPets(petType){
-  return axios.get(`${Pet_api_base_url}/adoptedCount/${petType}`)
-  .then(response => response.data)
-  .catch(error => {
-    console.error('Error while getting available pets: ', error);
-    throw error;
-  });
+// getAdoptedPets(){
+//   return axios.get(`${Pet_api_base_url}/adopted/count`)
+//   .then(response => response.data)
+//   .catch(error => {
+//     console.error('Error while getting available pets: ', error);
+//     throw error;
+//   });
 
-}  
+// }  
+
+// countByTypeAdopted(){
+//   return axios.get(`${Pet_api_base_url}/count-by-type`)
+//   .then(response => response.data)
+//   .catch(error => {
+//     console.error('Error while getting adopted pets: ', error);
+//     throw error;
+//   });
+// }
+getCountAdoptedByType() {
+  return axios
+    .get(`${Pet_api_base_url}/count-adopted-by-type`)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.error('Error while getting pet counts: ', error);
+      throw error;
+    });
+}
+
+getCountAvailableByType() {
+  return axios
+    .get(`${Pet_api_base_url}/count-available-by-type`)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.error('Error while getting pet counts: ', error);
+      throw error;
+    });
+}
 
 
           getPetById(id) {

@@ -60,4 +60,11 @@
   .form-button:hover {
     background-color: #45a049;
   }
+  .user-buttons{
+    background-color: black;
+    height: fit-content;
+    text-align: center;
+    align-self: start;
+
+  }
   

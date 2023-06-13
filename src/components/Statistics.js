@@ -10,34 +10,63 @@ Chart.register(...registerables);
 
 
 function Statistics() {
-  const [petType, setPetType] = useState('DOG');
   const [count, setCount] = useState(0);
-  const [petCount, setPetCount] = useState(0);
-  const [availableCats, setAvailableCats] = useState(0);
-  const [availableDogs, setAvailableDogs] = useState(0);
-  const [countCats, setCountCats] = useState(0);
-  const [countDogs, setCountDogs] = useState(0);
+  const [petCountAll, setPetCountAll] = useState(0);
+  const [petCountsAdopted, setPetCountsAdopted] = useState([]);
+  const [petCountsAvailable, setPetCountsAvailable] = useState([]);
 
-  const fetchPetCount = useCallback(async () => {
+ 
+
+
+
+  useEffect(() => {
+    fetchAvailablePetCounts();
+  }, []);
+
+  const fetchAvailablePetCounts = async () => {
     try {
-      const count = await PetService.getAdoptedPets(petType);
+      const response = await PetService.getCountAvailableByType();
+      setPetCountsAvailable(response);
+    } catch (error) {
+      console.error('Error while getting pet counts: ', error);
+    }
+  };
+ 
+  useEffect(() => {
+    fetchPetCounts();
+  }, []);
+
+  const fetchPetCounts = async () => {
+    try {
+      const response = await PetService.getCountAdoptedByType();
+      setPetCountsAdopted(response);
+    } catch (error) {
+      console.error('Error while getting pet counts: ', error);
+    }
+  };
+
+
+
+  const fetchAllPetCount = useCallback(async () => {
+    try {
+      const count = await PetService.getCountPets();
       setCount(count);
     } catch (error) {
       console.error(error);
     }
-  }, [petType]);
+  }, []);
 
   useEffect(() => {
-    fetchPetCount();
-  }, [fetchPetCount]);
+    fetchAllPetCount();
+  }, [fetchAllPetCount]);
 
 
   useEffect(() => {
    
     const fetchPetCount = async () => {
       try {
-        const count = await PetService.getCountPets();
-        setPetCount(count);
+        const count = await PetService.countAvailablePets();
+        setPetCountAll(count);
       } catch (error) {
         console.error(error);
       }
@@ -46,76 +75,25 @@ function Statistics() {
     fetchPetCount();
   }, []); 
 
-  useEffect(() => {
-   
-    const fetchAvailableCats = async () => {
-      
-      try {
-        const token = TokenManager.getAccessToken();
-        const count = await PetService.getAvailableCats(token);
-        setAvailableCats(count);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+ 
 
-    fetchAvailableCats();
-  }, []); 
+  const countAvailableCats = petCountsAvailable.find(petCount => petCount['pet Type'] === 'CAT');
+  const countAvailableDogs = petCountsAvailable.find(petCount => petCount['pet Type'] === 'DOG');
 
-  useEffect(() => {
-   
-    const fetchAvailableDogs = async () => {
-      try {
-        const count = await PetService.getAvailableDogs();
-        setAvailableDogs(count);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchAvailableDogs();
-  }, []); 
-
-
-  useEffect(() => {
-    const fetchCountCats = async () => {
-      try {
-        const count = await PetService.getAdoptedCats();
-        setCountCats(count);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchCountCats();
-  }, []);
-
-  useEffect(() => {
-    const fetchCountDogs = async () => {
-      try {
-        const count = await PetService.getAdoptedDogs();
-        setCountDogs(count);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchCountDogs();
-  }, []);
-
-  const handlePetTypeChange = (event) => {
-    setPetType(event.target.value);
-  };
+ 
+  const countAdoptedCats = petCountsAdopted.find(petCount => petCount['pet Type'] === 'CAT');
+  const countAdoptedDogs = petCountsAdopted.find(petCount => petCount['pet Type'] === 'DOG');
 
 
   const data = {
     labels: ['Available Pets', 'Adopted Cats', 'Adopted Dogs'],
     datasets: [
       {
-        data: [petCount, countCats, countDogs],
-        backgroundColor: ['#769353', '#ebbf58', '#364968'], // Warm colors
-        hoverBackgroundColor: ['#b03c3d', '#b03c3d', '#b03c3d'], // Hover colors
+        data: [petCountAll, countAdoptedCats?.count || 0, countAdoptedDogs?.count || 0],
+        backgroundColor: ['#769353', '#ebbf58', '#364968'], 
+        hoverBackgroundColor: ['#b03c3d', '#b03c3d', '#b03c3d'], 
       },
+      
     ],
   };
   
@@ -123,31 +101,41 @@ function Statistics() {
     plugins: {
       legend: {
         labels: {
-          color: 'black',// Set label color to white
+          color: 'black',
         },
       },
     },
   };
 
   return (
+    
     <div className="statistic">
       <h3 className="text-lg font-bold">Adoption Statistics</h3>
+
+      {/* <div>
+      <h1>Adopted pet </h1>
+      {petCounts.length === 0 ? (
+        <p>No pet type counts available.</p>
+      ) : (
+        petCounts.map((petCount, index) => (
+          <div key={index}>
+            <p>Adopted {petCount['pet Type']} : {petCount.count}  </p>
+           
+          </div>
+        ))
+      )}
+    </div> */}
+    
+
+
       <div>
-        <label className="text-lg font-bold" htmlFor="petType">Pet Type :</label>
-        <select id="petType" value={petType} onChange={handlePetTypeChange}>
-          <option value="DOG">Dogs</option>
-          <option value="CAT">Cats</option>
-        </select>
+        <p style={{ color: '#364968', fontWeight: 'bold' }}>Count of All Pets: {count}</p>
       </div>
-      <p style={{ color: '#385b66', fontWeight: 'bold' }}>Count of Adopted {petType}: {count}</p>
       <div>
-        <p style={{ color: '#364968', fontWeight: 'bold' }}>Count of All Pets: {petCount}</p>
+        <p style={{ color: '#2b2e4a', fontWeight: 'bold' }}>Count Available Cats: {countAvailableCats?.count || 0}</p>
       </div>
       <div>
-        <p style={{ color: '#2b2e4a', fontWeight: 'bold' }}>Count Available Cats: {availableCats}</p>
-      </div>
-      <div>
-        <p style={{ color: '#5b305a', fontWeight: 'bold' }}>Count  Available Dogs: {availableDogs}</p>
+        <p style={{ color: '#5b305a', fontWeight: 'bold' }}>Count  Available Dogs: {countAvailableDogs?.count || 0}</p>
       </div>
 
     

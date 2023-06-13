@@ -97,6 +97,7 @@ function Notifications({ username }) {
         <SendMessagePlaceholder
           className="send-message-placeholder"
           username={username}
+          isAdmin={username === 'admin1'}
           onMessageSend={sendMessage}
         />
         <br />

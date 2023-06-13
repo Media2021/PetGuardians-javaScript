@@ -20,6 +20,37 @@ class UserService {
     // }).then(response => response.data);
     return axios.get(User_api_base_url);
   }
+
+  getUsersWithAdoptedPets() {
+    return axios.get(`${User_api_base_url}/users-with-pets`)
+      .then(response => {
+        if (Array.isArray(response.data)) {
+          return response.data;
+        } else {
+          throw new Error('Invalid response format');
+        }
+      })
+      .catch(error => {
+        console.error('Error while getting users with adopted pets: ', error);
+        throw error;
+      });
+  }
+  
+  getUsersWithUsernames() {
+    return axios.get(`${User_api_base_url}/users-usernames`)
+      .then(response => {
+        if (Array.isArray(response.data)) {
+          return response.data;
+        } else {
+          throw new Error('Invalid response format');
+        }
+      })
+      .catch(error => {
+        console.error('Error while getting users with adopted pets: ', error);
+        throw error;
+      });
+  }
+
   deleteUser(id) {
     return axios.delete(User_api_base_url + "/" + id, {
       headers: { Authorization: `Bearer ${TokenManager.getAccessToken()}` }

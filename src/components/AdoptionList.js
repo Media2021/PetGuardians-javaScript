@@ -7,6 +7,8 @@ function AdoptionList ({request,refreshRequests }) {
     const [loading, setLoading] = useState(true);
     const [requests, setRequests] = useState(null);
   
+
+  
     useEffect(() => {
       const fetchData = async () => {
         setLoading(true);
@@ -25,6 +27,7 @@ function AdoptionList ({request,refreshRequests }) {
     const acceptRequest = async (id) => {
         try {
           await AdoptionRequestService.acceptAdoptionRequest(id);
+         
           refreshRequests(); // Refresh the adoption requests list after accepting the request
         } catch (error) {
           console.log(error);
@@ -34,6 +37,7 @@ function AdoptionList ({request,refreshRequests }) {
       const declineRequest = async (id) => {
         try {
           await AdoptionRequestService.declineAdoptionRequest(id);
+        
           refreshRequests(); // Refresh the adoption requests list after declining the request
         } catch (error) {
           console.log(error);
@@ -52,20 +56,27 @@ function AdoptionList ({request,refreshRequests }) {
         <p>Status: {request.status}</p>
        
         <div className="button-container">
-          <button
-            className="rounded text-white  font-semibold bg-red-700 hover:bg-gray-500 mr-2 py-1 px-8 mt-3"
-            onClick={() => declineRequest(request.id)}
-          >
-            Decline 
-          </button>
-          <button  onClick={() => acceptRequest(request.id)} className="rounded text-white font-semibold bg-black hover:bg-gray-500 py-1 px-6 ml-2">
-            Accept
-          </button>
+            {request.status !== "ACCEPTED" && (
+              <button
+                className="rounded text-white font-semibold bg-red-700 hover:bg-gray-500 mr-2 py-1 px-8 mt-3"
+                onClick={() => acceptRequest(request.id)}
+              >
+                Accept
+              </button>
+            )}
+            {request.status !== "DECLINED" && (
+              <button
+                onClick={() => declineRequest(request.id)}
+                className="rounded text-white font-semibold bg-black hover:bg-gray-500 py-1 px-6 ml-2"
+              >
+                Decline
+              </button>
+            )}
+          </div>
         </div>
-      </div>
-    )) ?? <p>No requests found</p>}
-  </div>
-);
+      )) ?? <p>No requests found</p>}
+    </div>
+  );
 }
 
 export default AdoptionList

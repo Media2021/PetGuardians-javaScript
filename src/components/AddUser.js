@@ -27,9 +27,12 @@ const navigate = useNavigate();
 
   }
 const saveUser = (e)=>{
-  
-  console.log(user);
-  UserService.saveUser(user).then((response)=>
+ 
+  const formattedDate = new Date(user.birthdate).toISOString().slice(0, 10);
+  const updatedUser = { ...user, birthdate: formattedDate };
+
+ 
+  UserService.saveUser(updatedUser).then((response)=>
   {
     console.log(response);
     setMessage("user saved successfully!");
@@ -131,12 +134,12 @@ onChange={(e)=> handleChange(e)}></input>
 <div className="items-center justify-center h-14 w-full my-4">
 <input  type="password"
 
-{...register("password", { required : true, minLength: 4, maxLength:8 })}
+
 placeholder=' password'
 name='password'
 value={user.password}
 onChange={(e)=> handleChange(e)}></input>
- {errors.password && <span className="text-red-500"> min length is 4 </span>}
+ 
 
 </div>
 {/* <label className='block text-black text-sm font-normal'>Phone</label> */}

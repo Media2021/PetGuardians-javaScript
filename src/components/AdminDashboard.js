@@ -91,6 +91,9 @@ const AdminDashboard = () =>{
     };
     fetchData();
   }, [id, refreshFlag]);
+  if (!userData) {
+    return <div className='session ' style={{ fontSize: '20px'  }} >Session is expired you need to login again ...</div>;
+  }
  
   return (
     <div>
@@ -100,7 +103,7 @@ const AdminDashboard = () =>{
       <button onClick={handleButtonClick2}className="btn">Show Pets  List </button>
       <button onClick={handleButtonClick3}className="btn">Show Users List </button>
       <button onClick={handleButtonClick4}className="btn">Show Adoption Requests List </button>
-      <button onClick={handleButtonClick5}className="btn">Notifications </button>
+      <button onClick={handleButtonClick5}className="btn">Chat </button>
       <button onClick={handleButtonClick6} className="btn">Calculate  Statistics</button>
      </div>
 <div>

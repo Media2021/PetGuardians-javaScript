@@ -16,6 +16,7 @@ function Home() {
         try {
           const response = await PetService.getAvailablePets();
           setPets(response);
+          console.log(response)
         } catch (error) {
           console.error('Error while getting available pets:', error);
         } finally {
@@ -29,12 +30,16 @@ function Home() {
         setSearchInput(event.target.value.toUpperCase());
       };
     
-      const filteredPets = pets?.filter(
-        (pet) =>
-        (pet.type.toUpperCase() === "CAT" || pet.type.toUpperCase() === "DOG") &&
-        (ageFilter === "" || pet.age.toString() === ageFilter) &&
-        (nameFilter === "" || pet.name.toUpperCase().includes(nameFilter))
-    );
+      let filteredPets = [];
+
+      if (pets) {
+        filteredPets = pets.filter(
+          (pet) =>
+            (pet.type.toUpperCase() === "CAT" || pet.type.toUpperCase() === "DOG") &&
+            (ageFilter === "" || pet.age.toString() === ageFilter) &&
+            (nameFilter === "" || pet.name.toUpperCase().includes(nameFilter))
+        );
+      }
     
       const searchedPets =
         searchInput !== ""
