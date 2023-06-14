@@ -53,6 +53,7 @@ function Home() {
               localStorage.setItem('selectedPetId', petId);
                   navigate(`/login?petId=${petId}`);
           };
+          
     return (
         <div>
         <div className="flex justify-center mb-4">
