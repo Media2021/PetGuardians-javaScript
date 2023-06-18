@@ -149,7 +149,7 @@ function UpdatePet() {
     <option value="">Select status</option>
     <option value="available">Available</option>
     <option value="pending">Pending</option>
-    <option value="adopted">Adopted</option>
+    
   </select>
  
 </div>

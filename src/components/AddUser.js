@@ -165,6 +165,7 @@ onChange={(e)=> handleChange(e)}></input>
 
 name='birthdate'
 value={user.birthdate}
+min="2005-01-01"
 onChange={(e)=> handleChange(e)}></input>
  {errors.birthdate && <span className="text-red-500"> date should be in the past</span>}
 

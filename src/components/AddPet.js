@@ -36,6 +36,9 @@ function AddPet() {
         {
           console.log(response);
           setMessage("Pet saved successfully!");
+          setTimeout(() => {
+            setMessage("");
+          }, 3000);
       
         }).catch((error)=>
         {
@@ -53,6 +56,7 @@ function AddPet() {
             status:"",
             gender:""
         });
+        
       };
     
 
@@ -83,6 +87,7 @@ function AddPet() {
     {...register("age", { required : true })} 
     placeholder=' age'
     name='age'
+    min={0}
     value={pet.age}
     onChange={(e)=> handleChange(e)}></input>
      {errors.age && <span className="text-red-500"> age is required</span>}
@@ -128,7 +133,7 @@ function AddPet() {
     <option value="">Select status</option>
     <option value="AVAILABLE">AVAILABLE</option>
     <option value="PENDING">PENDINGg</option>
-    <option value="ADOPTED">ADOPTED</option>
+   
   </select>
   {errors.status && <span className="text-red-500">Status is required</span>}
 </div>

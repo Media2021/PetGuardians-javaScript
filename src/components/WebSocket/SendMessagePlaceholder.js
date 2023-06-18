@@ -1,30 +1,29 @@
 import { useState, useEffect } from "react";
 import './Notifications.css';
 import UserService from "../../services/UserService";
+import { Combobox } from 'react-widgets';
 
 const SendMessagePlaceholder = (props) => {
   const [message, setMessage] = useState('');
   const [destinationUsername, setDestinationUsername] = useState('');
   const [usernames, setUsernames] = useState([]);
-
+  const [filteredUsernames, setFilteredUsernames] = useState([]);
 
   useEffect(() => {
     fetchUsernames();
-  }, []); 
-
-
-
+  }, []);
 
   const fetchUsernames = async () => {
     try {
       const response = await (props.isAdmin
-        ? UserService.getUsersWithAdoptedPets()
+        ? UserService.getUsersWithUsernames()
         : UserService.getUsersWithUsernames());
       console.log('Response:', response);
       if (Array.isArray(response)) {
         const usernames = response;
         console.log('Usernames:', usernames);
         setUsernames(usernames);
+        setFilteredUsernames(usernames);
       } else {
         console.error('Error: Invalid response format');
       }
@@ -32,12 +31,6 @@ const SendMessagePlaceholder = (props) => {
       console.error('Error while getting usernames: ', error);
     }
   };
-  
-  
-  
-  // if (!props.username) {
-  //   return <></>;
-  // }
 
   const onMessageSend = () => {
     if (!message) {
@@ -46,11 +39,11 @@ const SendMessagePlaceholder = (props) => {
 
     props.onMessageSend({ 'text': message, 'to': destinationUsername });
     setMessage('');
-  }
+  };
 
   const onSubmit = (event) => {
     event.preventDefault();
-  }
+  };
 
   const getRandomColor = () => {
     const letters = '0123456789ABCDEF';
@@ -60,6 +53,7 @@ const SendMessagePlaceholder = (props) => {
     }
     return color;
   };
+
   const getUsernameStyle = () => {
     return {
       fontSize: '16px',
@@ -67,34 +61,49 @@ const SendMessagePlaceholder = (props) => {
     };
   };
 
+  const handleSearch = (value) => {
+    const searchTerm = value.toLowerCase();
+    const filtered = usernames.filter((username) =>
+      username.toLowerCase().includes(searchTerm)
+    );
+    setFilteredUsernames(filtered);
+  };
+
   return (
-    
     <form onSubmit={onSubmit}>
       <div className="FromTo">
-        <label className="username-label" htmlFor='message'>Type ur SMS:  </label>
-        <input id='message' type='text' className="message-input" onChange={(event) => setMessage(event.target.value)} value={message} />
+        <label className="username-label" htmlFor="message">
+          Type your SMS:
+        </label>
+        <input
+          id="message"
+          type="text"
+          className="message-input"
+          onChange={(event) => setMessage(event.target.value)}
+          value={message}
+        />
       </div>
       <div className="FromTo">
-        <label htmlFor='destUsername' className="username-label"> Send to  : </label>
-        <select id='destUsername' className="destination-input" style={{ backgroundColor: 'antiquewhite' }} onChange={(event) => setDestinationUsername(event.target.value)}>
-          <option value="">Select a username</option>
-          {usernames.map((username,index) => (
-           <option
-           value={username}
-           key={index}
-           style={{
-             ...getUsernameStyle(),
-             color: getRandomColor(),
-           }}
-         >
-           {username}
-         </option>
-
-          ))}
-        </select>
-      <button className="send-button " onClick={onMessageSend}>Send</button></div>
+        <label htmlFor="destUsername" className="username-label">
+          Send to:
+        </label>
+        <Combobox
+          id="destUsername"
+          data={filteredUsernames}
+          value={destinationUsername}
+          textField="name"
+          filter="contains"
+          placeholder="Select a username"
+          onChange={(value) => setDestinationUsername(value)}
+          onSearch={handleSearch}
+          style={{ backgroundColor: 'antiquewhite' }}
+        />
+        <button className="send-button" onClick={onMessageSend}>
+          Send
+        </button>
+      </div>
     </form>
   );
-}
+};
 
 export default SendMessagePlaceholder;

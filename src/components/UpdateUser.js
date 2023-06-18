@@ -16,7 +16,7 @@ const UpdateUser = () => {
     password:"",
     phone:"",
     birthdate:"",
-    role:"User"
+    role:"USER"
   });
 
   const handleChange = (e) => {

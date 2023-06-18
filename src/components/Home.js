@@ -105,14 +105,14 @@ function Home() {
             <p>Type: {pet.type}</p>
             <p>Status: {pet.status}</p>
             <p>Gender: {pet.gender}</p>
-            <div className="buttons px-16">
+            {/* <div className="buttons px-16">
               <button
                 className="rounded text-white font-semibold bg-black hover:bg-gray-500 py-1 px-6"
                 onClick={() => handleAdoptButtonClick(pet.id)}
               >
                 Adopt
               </button>
-            </div>
+            </div> */}
           </div>
         )) ?? <p>No pets found</p>}
       </div>

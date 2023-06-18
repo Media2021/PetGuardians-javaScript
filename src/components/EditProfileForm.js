@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import UserService from '../services/UserService';
 import "../style/EditProfileForm.css";
 
-const EditProfileForm = ({ userData,onClose}) => {
+const EditProfileForm = ({ userData, onClose }) => {
   const [formData, setFormData] = useState({
     username:userData.username,
     firstName: userData.firstName,
@@ -12,7 +12,7 @@ const EditProfileForm = ({ userData,onClose}) => {
     phone: userData.phone,
 //    adoptedPets:userData.adoptedPets,
   });
-
+  const [message, setMessage] = useState('');
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
@@ -26,9 +26,14 @@ const EditProfileForm = ({ userData,onClose}) => {
     try {
       const response = await UserService.updateUser(userData.id, formData);
       console.log('User data updated successfully:', response);
+      setMessage('User data updated successfully!');
     } catch (error) {
       console.log('Error while updating user data: ', error);
+      setMessage('An error occurred. Please try again later.');
     }
+    setTimeout(() => {
+      setMessage('');
+    }, 3000);
   };
   const handleCancel = () => {
     onClose(); // Call the onClose function to close the form
@@ -120,6 +125,9 @@ const EditProfileForm = ({ userData,onClose}) => {
           Cancel
         </button>
       </div>
+      {message && (
+        <div className="message" style={{ background: 'white' ,  width: '200px'  }}>{message}</div>
+      )}
     </form>
   );
 };

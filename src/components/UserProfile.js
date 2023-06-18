@@ -8,6 +8,7 @@ import AdoptionRequestService from '../services/AdoptionRequestService';
 import Notifications from '../components/WebSocket/Notifications';
 import TokenManager from "../Token/TokenManager";
 import UserList from './UserList';
+import PetsForAdoption from './PetsForAdoption'; // Import the PetsForAdoption component
 
 const UserProfile = () => {
   const { id } = useParams();
@@ -22,7 +23,7 @@ const UserProfile = () => {
   const [storedPetId, setStoredPetId] = useState(localStorage.getItem("selectedPetId"));
   const [showUserProfile, setShowUserProfile] = useState(false);
   const [message, setMessage] = useState("");
-  
+  const [showPetsForAdoption, setShowPetsForAdoption] = useState(false); // Add state for showing PetsForAdoption component
 
   useEffect(() => {
     const fetchSelectedPet = async () => {
@@ -85,6 +86,7 @@ const UserProfile = () => {
     setDisplayAdoptionRequests(false);
     setShowEditProfile(false);
     setShowUserProfile(false);
+    setShowPetsForAdoption(false); // Hide PetsForAdoption component when clicking Pet Info button
   };
 
   const handleNotificationsButtonClick = () => {
@@ -93,6 +95,7 @@ const UserProfile = () => {
     setDisplayAdoptionRequests(false);
     setShowEditProfile(false);
     setShowUserProfile(false);
+    setShowPetsForAdoption(false); // Hide PetsForAdoption component when clicking Notifications button
   };
 
   const handleFormClose = () => {
@@ -105,6 +108,7 @@ const UserProfile = () => {
     setShowNotifications(false);
     setShowEditProfile(false);
     setShowUserProfile(false);
+    setShowPetsForAdoption(false); // Hide PetsForAdoption component when clicking Show Adoption Requests button
   };
 
   const handleShowUserProfile = () => {
@@ -112,6 +116,7 @@ const UserProfile = () => {
     setShowPetInfo(false);
     setShowNotifications(false);
     setShowUserProfile(true);
+    setShowPetsForAdoption(false); // Hide PetsForAdoption component when clicking My Profile button
   };
 
   const handleDeletePetId = () => {
@@ -122,6 +127,14 @@ const UserProfile = () => {
     window.location.reload();
   };
   
+  const handleShowPetsForAdoption = () => {
+    setShowPetInfo(false);
+    setShowNotifications(false);
+    setDisplayAdoptionRequests(false);
+    setShowEditProfile(false);
+    setShowUserProfile(false);
+    setShowPetsForAdoption(true); // Show PetsForAdoption component when clicking the new button
+  };
 
   const handleSendRequest = async () => {
     if (selectedPet) {
@@ -141,7 +154,7 @@ const UserProfile = () => {
         localStorage.removeItem("selectedPetId");
         setPetId(null);
         setStoredPetId(null);
-        window.location.reload();
+        
       } catch (error) {
         console.log('Error while creating adoption request: ', error);
         setMessage("Error while creating adoption request.");
@@ -160,20 +173,19 @@ const UserProfile = () => {
   const formattedBirthdate = new Date(userData.birthdate).toLocaleDateString();
 
   return (
-    <div >
-
-<div className="buttons px-18 user-buttons">
-        <button
+    <div>
+      <div className="buttons px-18 user-buttons">
+        {/* <button
           onClick={handlePetInfoButtonClick}
           className="rounded text-white font-semibold bg-black hover:bg-gray-500 py-1 px-8 mt-4"
         >
           Pet Information
-        </button>
+        </button> */}
         <button
           onClick={handleShowAdoptionRequests}
           className="rounded text-white font-semibold bg-black hover:bg-gray-500 py-1 px-8 mt-4"
         >
-          Show Adoption Requests
+          Show my Adoption Requests
         </button>
         <button
           onClick={handleNotificationsButtonClick}
@@ -187,18 +199,19 @@ const UserProfile = () => {
         >
           My Profile
         </button>
+        <button
+          onClick={handleShowPetsForAdoption}
+          className="rounded text-white font-semibold bg-black hover:bg-gray-500 py-1 px-8 mt-4"
+        >
+         Available  Pets for Adoption
+        </button>
       </div>
-
-
-
 
       {showNotifications && (
         <div className="notification" style={{ marginTop: '30px' }}>
-          <Notifications username={userData.username}  />
+          <Notifications username={userData.username} />
         </div>
       )}
-
-      
 
       {showUserProfile && (
         <div className="user-profile-info" style={{ marginTop: '30px' }}>
@@ -256,7 +269,7 @@ const UserProfile = () => {
       )}
 
       {showPetInfo && selectedPet && (
-        <div className="pet-card"style={{ marginTop: '30px' }}>
+        <div className="pet-card" style={{ marginTop: '30px' }}>
           <h3 className="text-lg font-bold">Pet Information</h3>
           <p>Pet ID: {selectedPet.id}</p>
           <p>Name: {selectedPet.name}</p>
@@ -282,7 +295,31 @@ const UserProfile = () => {
         </div>
       )}
 
-      {showEditProfile && <EditProfileForm userData={userData} onClose={handleFormClose} />}
+      {showEditProfile && (
+        <div className="edit-profile-form" style={{ marginTop: '30px' }}>
+          <h3 className="text-lg font-bold">Edit Profile</h3>
+          <EditProfileForm
+            userId={id}
+            userData={userData}
+            onClose={handleFormClose}
+            username={userData.username}
+            firstName={userData.firstName}
+            lastName={userData.lastName}
+            email={userData.email}
+            address={userData.address}
+            phone={userData.phone}
+            birthdate={userData.birthdate}
+            handleFormClose={handleFormClose}
+            
+          />
+        </div>
+      )}
+
+      {showPetsForAdoption && (
+        <div className="pets-for-adoption" style={{ marginTop: '30px' }}>
+          <PetsForAdoption userData={userData} />
+        </div>
+      )}
     </div>
   );
 };
